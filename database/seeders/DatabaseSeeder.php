@@ -20,28 +20,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Plan::query()->create([
-            'name' => 'basic',
-            'description' => 'description',
-            'max_video_count' => 100,
-            'max_video_size' => 100,
-            'price' => 50,
-            'old_price' => 60,
-            'annual_price' => 500,
-            'old_annual_price' => 600,
-        ]);
-
-        User::query()->create([
-            'name' => 'Daniel',
-            'email' => 'tshragyand@gmail.com',
-            'shopify_data' => '{}',
-            'shopify_id' => '123456',
-            'plan_id' => 2,
-            'shopify_token' => 'token',
-            'status' => User::STATUS_ACTIVE,
-            'role' => User::ROLES_USER,
-            'shopify_username' => 'username',
-        ]);
+//        Plan::query()->create([
+//            'name' => 'basic',
+//            'description' => 'description',
+//            'max_video_count' => 100,
+//            'max_video_size' => 100,
+//            'price' => 50,
+//            'old_price' => 60,
+//            'annual_price' => 500,
+//            'old_annual_price' => 600,
+//        ]);
+//
+//        User::query()->create([
+//            'name' => 'Daniel',
+//            'email' => 'tshragyand@gmail.com',
+//            'shopify_data' => '{}',
+//            'shopify_id' => '123456',
+//            'plan_id' => 2,
+//            'shopify_token' => 'token',
+//            'status' => User::STATUS_ACTIVE,
+//            'role' => User::ROLES_USER,
+//            'shopify_username' => 'username',
+//        ]);
 
         for ($i = 0; $i < 10; $i++) {
             Product::query()

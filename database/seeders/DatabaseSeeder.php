@@ -31,17 +31,17 @@ class DatabaseSeeder extends Seeder
             'old_annual_price' => 600,
         ]);
 
-//        User::query()->create([
-//            'name' => 'Daniel',
-//            'email' => 'tshragyand@gmail.com',
-//            'shopify_data' => '{}',
-//            'shopify_id' => '123456',
-//            'plan_id' => 2,
-//            'shopify_token' => 'token',
-//            'status' => User::STATUS_ACTIVE,
-//            'role' => User::ROLES_USER,
-//            'shopify_username' => 'username',
-//        ]);
+        User::query()->create([
+            'name' => 'Daniel',
+            'email' => 'tshragyand@gmail.com',
+            'shopify_data' => '{}',
+            'shopify_id' => '123456',
+            'plan_id' => 2,
+            'shopify_token' => 'token',
+            'status' => User::STATUS_ACTIVE,
+            'role' => User::ROLES_USER,
+            'shopify_username' => 'username',
+        ]);
 
         for ($i = 0; $i < 10; $i++) {
             Product::query()

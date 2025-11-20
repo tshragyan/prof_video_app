@@ -26,7 +26,8 @@ return [
     ],
 
     'shopify' => [
-        'app_id' => env('APP_ID'),
+        'api_key' => env('SHOPIFY_API_KEY'),
+        'client_secret' => env('SHOPIFY_CLIENT_SECRET'),
     ],
 
     'ses' => [

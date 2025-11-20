@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\PlanChargeRequestController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+Route::get('/callback', [AuthController::class, 'callback'])->name('shopify.callback');
+Route::get('/install', [AuthController::class, 'install'])->name('shopify.install');
+Route::get('/api/callback', [AuthController::class, 'apiCallback'])->name('shopify.api.callback');
 
 
 

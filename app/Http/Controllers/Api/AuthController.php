@@ -43,8 +43,7 @@ class AuthController extends Controller
             return response('Invalid request', 400);
         }
 
-        $nonce = session()->get('shopify_oauth_nonce', null);
-
+        $nonce = cache()->get($shop. '_state');
         if (!$nonce || $state !== $nonce) {
             return response('Invalid state ' . $nonce . '-' . $state, 403);
         }
@@ -111,7 +110,7 @@ class AuthController extends Controller
         }
 
         $nonce = bin2hex(random_bytes(16));
-        session()->put('shopify_oauth_nonce', $nonce);
+        cache()->put($shop. '_state', $nonce);
         $installUrl = "https://{$shop}/admin/oauth/authorize?" . http_build_query([
                 'client_id' => $this->apiKey,
                 'scope' => $this->scopes,

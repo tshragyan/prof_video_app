@@ -20,7 +20,7 @@ class AuthController extends Controller
         $this->apiKey = config('services.shopify.api_key');
         $this->apiSecret = config('services.shopify.client_secret');
         $this->scopes = config('services.shopify.shopify_scopes');
-        $this->redirectUri = route('auth.shopify.callback');
+        $this->redirectUri = route('shopify.callback');
     }
 
     public function callback(Request $request)

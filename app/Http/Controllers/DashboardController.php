@@ -14,7 +14,7 @@ class DashboardController extends Controller
             [
                 'user_id' => 1,
                 'method' => 'main',
-                'data' => $request->all(),
+                'data' => json_encode($request->all()),
             ]
         );
 

@@ -1,0 +1,109 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
+class AuthController extends Controller
+{
+    protected $apiKey;
+    protected $apiSecret;
+    protected $scopes;
+    protected $redirectUri;
+
+    public function __construct()
+    {
+        $this->apiKey = config('services.shopify.api_key');
+        $this->apiSecret = config('services.shopify.client_secret');
+        $this->scopes = config('services.shopify.shopify_scopes');
+        $this->redirectUri = route('auth.shopify.callback');
+    }
+
+    public function callback(Request $request)
+    {
+        $shop = $request->get('shop');
+        $hmac = $request->get('hmac');
+        $code = $request->get('code');
+        $state = $request->get('state');
+
+        if (!$shop || !$hmac || !$code) {
+            return response('Invalid request', 400);
+        }
+
+        $nonce = session('shopify_oauth_nonce');
+        if (!$nonce || $state !== $nonce) {
+            return response('Invalid state', 403);
+        }
+
+        $params = $request->except(['hmac', 'signature', 'utf8']);
+        ksort($params);
+        $queryString = http_build_query($params);
+        $calculated = hash_hmac('sha256', urldecode(http_build_query($params)), $this->apiSecret);
+        if (!hash_equals($calculated, $hmac)) {
+            return response('HMAC validation failed', 403);
+        }
+
+        $response = Http::asForm()->post("https://{$shop}/admin/oauth/access_token", [
+            'client_id' => $this->apiKey,
+            'client_secret' => $this->apiSecret,
+            'code' => $code,
+        ]);
+
+        if (!$response->ok()) {
+            return response('Failed to get access token: ' . $response->body(), 500);
+        }
+
+        $data = $response->json();
+        $accessToken = $data['access_token'] ?? null;
+        $scope = $data['scope'] ?? null;
+
+        if (!$accessToken) {
+            return response('No access token returned', 500);
+        }
+
+        $user = User::query()->updateOrCreate(
+            ['shopify_username' => $shop],
+            [
+                'shopify_token' => $accessToken,
+                'role' => User::ROLES_USER,
+                'email' => 'user@email.com' . rand(1,9999),
+                'shopify_id' => 1246654,
+                'shopify_data' => 1246654,
+                'name' => 'user',
+                'status' => User::STATUS_INACTIVE,
+            ]
+        );
+
+        auth()->login($user);
+        session(['shopify_shop' => $shop]);
+        return redirect()->to(route('home'));
+    }
+
+    public function install(Request $request)
+    {
+        $shop = $request->get('shop');
+        if (!$shop) {
+            return response('Missing shop parameter', 400);
+        }
+
+        $nonce = bin2hex(random_bytes(16));
+        session(['shopify_oauth_nonce' => $nonce]);
+
+        $installUrl = "https://{$shop}/admin/oauth/authorize?" . http_build_query([
+                'client_id' => $this->apiKey,
+                'scope' => $this->scopes,
+                'redirect_uri' => $this->redirectUri,
+                'state' => $nonce,
+            ]);
+
+        return redirect()->away($installUrl);
+    }
+
+    public function apiCallback(Request $request)
+    {
+        return true;
+    }
+}

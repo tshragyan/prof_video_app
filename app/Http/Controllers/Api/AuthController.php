@@ -91,7 +91,7 @@ class AuthController extends Controller
         auth()->login($user);
 
         session(['shopify_shop' => $shop]);
-        return redirect()->to(route('home'));
+        return redirect()->to(route('dashboard.home'));
     }
 
     public function install(Request $request)

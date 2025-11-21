@@ -43,16 +43,16 @@ class DatabaseSeeder extends Seeder
 //            'shopify_username' => 'username',
 //        ]);
 
-        for ($i = 0; $i < 10; $i++) {
-            Product::query()
-                ->create([
-                    'title' => Str::random(6),
-                    'user_id' => 1,
-                    'shopify_data' => '[]'
-                ]);
-        }
+//        for ($i = 0; $i < 10; $i++) {
+//            Product::query()
+//                ->create([
+//                    'title' => Str::random(6),
+//                    'user_id' => 1,
+//                    'shopify_data' => '[]'
+//                ]);
+//        }
 
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 3; $i < 10; $i++) {
             Video::query()
                 ->create([
                     'title' => Str::random(6),

@@ -44,8 +44,9 @@ class AuthController extends Controller
         }
 
         $nonce = session()->get('shopify_oauth_nonce', null);
+
         if (!$nonce || $state !== $nonce) {
-            return response('Invalid state', 403);
+            return response('Invalid state ' . $nonce . '-' . $state, 403);
         }
 
         $params = $request->except(['hmac', 'signature', 'utf8']);

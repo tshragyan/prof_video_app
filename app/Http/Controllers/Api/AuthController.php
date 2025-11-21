@@ -43,7 +43,7 @@ class AuthController extends Controller
             return response('Invalid request', 400);
         }
 
-        $nonce = session('shopify_oauth_nonce');
+        $nonce = session()->get('shopify_oauth_nonce', null);
         if (!$nonce || $state !== $nonce) {
             return response('Invalid state', 403);
         }
@@ -74,6 +74,7 @@ class AuthController extends Controller
             return response('No access token returned', 500);
         }
 
+        /** @var User $user */
         $user = User::query()->updateOrCreate(
             ['shopify_username' => $shop],
             [
@@ -88,6 +89,7 @@ class AuthController extends Controller
         );
 
         auth()->login($user);
+
         session(['shopify_shop' => $shop]);
         return redirect()->to(route('home'));
     }
@@ -108,8 +110,7 @@ class AuthController extends Controller
         }
 
         $nonce = bin2hex(random_bytes(16));
-        session(['shopify_oauth_nonce' => $nonce]);
-
+        session()->put('shopify_oauth_nonce', $nonce);
         $installUrl = "https://{$shop}/admin/oauth/authorize?" . http_build_query([
                 'client_id' => $this->apiKey,
                 'scope' => $this->scopes,

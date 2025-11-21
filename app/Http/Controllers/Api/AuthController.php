@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopifyErrorLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -24,6 +25,15 @@ class AuthController extends Controller
 
     public function callback(Request $request)
     {
+
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'callback',
+                'data' => json_encode($request->all()),
+            ]
+        );
         $shop = $request->get('shop');
         $hmac = $request->get('hmac');
         $code = $request->get('code');
@@ -84,6 +94,14 @@ class AuthController extends Controller
 
     public function install(Request $request)
     {
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'install',
+                'data' => json_encode($request->all()),
+            ]
+        );
         $shop = $request->get('shop');
         if (!$shop) {
             return response('Missing shop parameter', 400);

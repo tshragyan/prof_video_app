@@ -1,9 +1,17 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+import { initShopifyAppBridge } from './shopify'
 
 createInertiaApp({
     resolve: name => import(`./Pages/${name}.vue`),
     setup({ el, App, props }) {
-        createApp({ render: () => h(App, props) }).mount(el)
+
+        const appBridge = initShopifyAppBridge(props.initialPage.props);
+
+        const vueApp = createApp({ render: () => h(App, props) });
+
+        vueApp.config.globalProperties.$appBridge = appBridge;
+
+        vueApp.mount(el);
     },
 })

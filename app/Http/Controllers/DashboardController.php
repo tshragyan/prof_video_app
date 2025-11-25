@@ -10,6 +10,14 @@ class DashboardController extends Controller
 {
     public function home(Request $request)
     {
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'dashboard',
+                'data' => 'in dashboard',
+
+            ]
+        );
         try {
 
             return Inertia::render('Home', [

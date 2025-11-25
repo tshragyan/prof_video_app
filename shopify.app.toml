@@ -1,0 +1,11 @@
+[[ui.navigation]]
+title = "Dashboard"
+destination = "/"
+
+[[ui.navigation]]
+title = "Video Library"
+destination = "/videos"
+
+[[ui.navigation]]
+title = "Settings"
+destination = "/settings"

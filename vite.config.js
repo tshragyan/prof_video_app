@@ -8,7 +8,7 @@ export default defineConfig({
         port: 5173,
     },
     plugins: [
-        vue(), // ОБЯЗАТЕЛЬНО
+        vue(),
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,

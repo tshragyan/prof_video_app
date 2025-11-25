@@ -89,6 +89,15 @@ class AuthController extends Controller
         auth()->login($user);
 
         session(['shopify_shop' => $shop]);
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'redirect to dashboard',
+                'data' => '{}',
+
+            ]
+        );
         return redirect()->to(route('dashboard.home', ['shop' => $shop]));
     }
 

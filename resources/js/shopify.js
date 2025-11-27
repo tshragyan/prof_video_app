@@ -1,14 +1,20 @@
 import createApp from '@shopify/app-bridge';
+import { getSessionToken } from '@shopify/app-bridge-utils';
 
 export function initShopifyAppBridge(props) {
-    if (!props.host) {
-        console.warn("⚠️ host not provided — app likely not inside Shopify Admin");
-        return null;
-    }
+    const url = new URL(window.location.href);
 
-    return createApp({
+    const app = createApp({
         apiKey: import.meta.env.VITE_SHOPIFY_API_KEY,
-        host: props.host,
+        host: url.searchParams.get('host'),
         forceRedirect: true,
     });
+
+    getSessionToken(app).then(token => {
+        if (window.axios) {
+            window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        }
+    });
+
+    return app;
 }

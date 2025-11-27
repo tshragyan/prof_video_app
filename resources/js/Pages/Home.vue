@@ -1,20 +1,28 @@
-<script setup>
-import { onMounted, getCurrentInstance } from 'vue'
-import { TitleBar } from '@shopify/app-bridge/actions'
-
-const appBridge = getCurrentInstance().appContext.config.globalProperties.$appBridge
-
-onMounted(() => {
-    if (appBridge) {
-        TitleBar.create(appBridge, {
-            title: "Dashboard",
-        });
-    } else {
-        console.warn("App Bridge is NULL – page opened directly, not inside Shopify")
-    }
-});
-</script>
-
 <template>
-    <h1>Shopify App Works!</h1>
+    <button @click="openPicker" class="px-4 py-2 bg-black text-white rounded">
+        Select Products
+    </button>
 </template>
+
+<script setup>
+import { useAttrs, inject } from 'vue'
+import { ResourcePicker } from '@shopify/app-bridge/actions'
+
+const appBridge = inject('appBridge')
+
+function openPicker() {
+    const picker = ResourcePicker.create(appBridge, {
+        resourceType: ResourcePicker.ResourceType.Product,
+        multiple: true,
+    })
+
+    picker.subscribe(ResourcePicker.Action.SELECT, ({ selection }) => {
+        console.log('Selected:', selection)
+
+        // Example: send to backend
+        // axios.post('/products/attach', { products: selection })
+    })
+
+    picker.dispatch(ResourcePicker.Action.OPEN)
+}
+</script>

@@ -11,6 +11,7 @@ createInertiaApp({
         const vueApp = createApp({ render: () => h(App, props) });
 
         vueApp.config.globalProperties.$appBridge = appBridge;
+        vueApp.provide('appBridge', appBridge);
 
         vueApp.mount(el);
     },

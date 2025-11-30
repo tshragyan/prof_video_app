@@ -17,6 +17,9 @@ class CheckShopifyHost
     public function handle(Request $request, Closure $next): Response
     {
 
+//        $request = json_decode('{"embedded":"1","hmac":"1f57466022f039dc63c6152b03734ac96e3caafdcc8a2d81ed3863e074b20682","host":"YWRtaW4uc2hvcGlmeS5jb20vc3RvcmUvdmlkZW9jcmF0","id_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczpcL1wvdmlkZW9jcmF0Lm15c2hvcGlmeS5jb21cL2FkbWluIiwiZGVzdCI6Imh0dHBzOlwvXC92aWRlb2NyYXQubXlzaG9waWZ5LmNvbSIsImF1ZCI6ImI1NDViZmVhMTY4MWNlOTg1NzMxYzg1M2IyMDY4YjVmIiwic3ViIjoiODY5MTAxNDA0NjQiLCJleHAiOjE3NjQ1MDY4NzEsIm5iZiI6MTc2NDUwNjgxMSwiaWF0IjoxNzY0NTA2ODExLCJqdGkiOiIwMTUwY2JmYi03NDU4LTQwOWItYTcxZS01ZjYwNDdlMzkwYTIiLCJzaWQiOiI1M2E4Y2Q5OC1kNTY3LTRlMjctODJmYS1mZTFhMDZkZTc1ZTEiLCJzaWciOiIyZDhlMTVkZTEwNTk4MzY1Y2EwOGYyMmMxOWNhMGUwN2E3MTlhZmM0ZThhZmEzNDI0ZWEzYmI3ZGQxNDJmNTllIn0.q2ZslDX6tspl95H4ifzJ_vnetFRBg6YOdfpvysvuN5g","locale":"en","session":"670cc2da7ca1b4b8b99cad4f7de5ee4aa77c34777994e5bbf5eba175f285410e","shop":"videocrat.myshopify.com","timestamp":"1764506811"}', true);
+//        dd($request);
+//
         ShopifyErrorLog::query()->create(
             [
                 'user_id' => 1,
@@ -29,12 +32,14 @@ class CheckShopifyHost
             return $next($request);
         }
 
-        $query = $request->query();
+        $query = $request->all();
         $hmac = $query['hmac'] ?? null;
 
         if (!$hmac) {
             return redirect(route('access_denied'));
         }
+
+
 
         unset($query['hmac']);
         ksort($query);

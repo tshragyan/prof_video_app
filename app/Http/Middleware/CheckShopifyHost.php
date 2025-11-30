@@ -39,9 +39,7 @@ class CheckShopifyHost
         /** @var User $user */
         $user = User::query()->where('shopify_username', $query['shop'])->first();
         auth()->login($user);
-        if (empty(json_decode($user->shopify_data)['shop'])) {
             $user->shopify_data =  json_encode($user->getService()->getStoreInfo());
-        }
 
         return $next($request);
     }

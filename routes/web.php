@@ -30,7 +30,6 @@ Route::prefix('auth')->name('shopify.')->group(function() {
     Route::get('callback', [AuthController::class, 'callback'])->name('callback');
     Route::get('install', [AuthController::class, 'install'])->name('.install');
 });
-
 Route::get('api/auth/callback', [AuthController::class, 'apiCallback'])->name('shopify.api.callback');
 
 Route::prefix('admin')->name('admin.')->group(function () {

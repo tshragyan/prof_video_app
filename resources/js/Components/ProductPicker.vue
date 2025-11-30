@@ -1,7 +1,7 @@
 <template>
-    <button @click="openPicker" class="px-4 py-2 bg-black text-white rounded">
-        Select Products
-    </button>
+
+    <s-button @click="openPicker" tone="critical" variant="primary"> Select Products</s-button>
+
 </template>
 
 <script setup>

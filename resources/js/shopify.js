@@ -18,3 +18,17 @@ export function initShopifyAppBridge(props) {
 
     return app;
 }
+
+export async function apiRequest(url, method = "POST", data = {}) {
+    const token = await getSessionToken(app);
+
+    return axios({
+        url,
+        method,
+        data,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+

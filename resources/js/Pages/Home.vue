@@ -1,55 +1,26 @@
 <template>
+    <s-app-nav>
+        <s-link href="/" rel="home">Home</s-link>
+        <s-link href="/templates">Templates</s-link>
+        <s-link href="/settings">Settings</s-link>
+    </s-app-nav>
+    <s-page heading="Videocrat">
+            <s-text>Shoppable Videos</s-text>
+        <s-grid
+            gridTemplateColumns="repeat(2, 1fr)"
+            gap="small"
+            justifyContent="center"
+        >
+            <s-grid-item gridColumn="span 1" border="base" borderStyle="dashed">
+                Imported Videos
+            </s-grid-item>
+        </s-grid>
+    </s-page>
 
-    <div id="layout" style="background-color:#ebebeb">
-        <button @click="openPicker" class="px-4 py-2 bg-black text-white rounded">
-            Select Products
-        </button>
-        <div class="card card-box-shadow" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
-        <div class="card card-box-shadow" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
-        <div class="card card-box-shadow" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script setup>
-import { useAttrs, inject } from 'vue'
+import ProductPicker from '../Components/ProductPicker.vue'
 import { ResourcePicker } from '@shopify/app-bridge/actions'
 
-const appBridge = inject('appBridge')
-
-function openPicker() {
-    const picker = ResourcePicker.create(appBridge, {
-        resourceType: ResourcePicker.ResourceType.Product,
-        multiple: true,
-    })
-
-    picker.subscribe(ResourcePicker.Action.SELECT, ({ selection }) => {
-        console.log('Selected:', selection)
-    })
-
-    picker.dispatch(ResourcePicker.Action.OPEN)
-}
 </script>

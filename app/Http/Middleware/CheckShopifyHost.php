@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ShopifyErrorLog;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,8 @@ class CheckShopifyHost
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
+    {echo json_encode($request->all());
+
         if (app()->environment('local') || $request->getHost() === 'localhost') {
             return $next($request);
         }

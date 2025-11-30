@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+    Route::prefix('auth')->name('shopify.')->group(function() {
+        Route::get('callback', [AuthController::class, 'callback'])->name('callback');
+        Route::get('install', [AuthController::class, 'install'])->name('.install');
+    });
 
 });
 
@@ -32,14 +36,7 @@ Route::get('/access-denied', function () {
     return view('errors.access_denied');
 })->name('access_denied');
 
-Route::prefix('auth')->name('shopify.')->group(function() {
-    Route::get('callback', [AuthController::class, 'callback'])->name('callback');
-    Route::get('install', [AuthController::class, 'install'])->name('.install');
-});
-Route::get('api/auth/callback', [AuthController::class, 'apiCallback'])->name('shopify.api.callback');
-
 Route::prefix('admin')->name('admin.')->group(function () {
-
     Route::get('signIn', [AdminController::class, 'signIn'])->name('signIn');
     Route::post('login', [AdminController::class, 'login'])->name('login');
     Route::get('logout', [AdminController::class, 'logout'])->name('logout');

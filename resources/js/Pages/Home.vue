@@ -17,7 +17,8 @@
             </s-grid-item>
             <s-grid-item gridColumn="span 1" border="base" borderStyle="dashed">
                 <s-box padding="base" background="subdued" border="base" borderRadius="base">
-                    <s-heading title="now You Are using Basic plan">{{shop}} <s-icon type="person" /></s-heading>
+                    <s-heading title="now You Are using Basic plan">Your Shop  <s-icon type="person" /></s-heading>
+                    <s-aragraph>{{shop}}</s-aragraph>
                 </s-box>
             </s-grid-item>
         </s-grid>

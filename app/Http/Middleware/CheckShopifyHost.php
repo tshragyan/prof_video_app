@@ -15,7 +15,15 @@ class CheckShopifyHost
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {echo json_encode($request->all());
+    {
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'dashboard',
+                'data' => json_encode($request->all()),
+            ]
+        );
 
         if (app()->environment('local') || $request->getHost() === 'localhost') {
             return $next($request);

@@ -11,6 +11,14 @@ class DashboardController extends Controller
 {
     public function home(Request $request)
     {
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 1,
+                'method' => 'dashboard',
+                'data' => json_encode($request->all()),
+            ]
+        );
         /** @var User $user */
             return Inertia::render('Home', [
                 'message' => 'Welcome Daniel!',

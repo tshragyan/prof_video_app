@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="shopify-api-key" content="{{config('services.shopify.api_key')}}" />
+    <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
     <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
-    <script type="module" src="https://cdn.shopify.com/shopifycloud/webcomponents/webcomponents.esm.js"></script>
-
-    <link rel="stylesheet" href="https://unpkg.com/@shopify/polaris@9.0.0/build/esm/styles.css">
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
 </head>
 <body>
-api_key: {{config('services.shopify.api_key')}}
+api_key: config('services.shopify.api_key')
 host: {{request('host')}}
 <s-app-provider
     api-key="{{ config('services.shopify.api_key') }}"

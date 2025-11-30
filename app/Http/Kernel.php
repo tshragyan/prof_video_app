@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckShopifyHost;
 use App\Http\Middleware\ShopifyTokenMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin.auth' => AdminMiddleware::class,
         'shopify.auth' => ShopifyTokenMiddleware::class,
+        'shopify.host' => CheckShopifyHost::class,
     ];
 }

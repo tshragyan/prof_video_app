@@ -8,30 +8,25 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-api_key: config('services.shopify.api_key')
-host: {{request('host')}}
 <s-app-provider
     api-key="{{ config('services.shopify.api_key') }}"
     host="{{ request('host') }}"
 >
     <s-app-nav>
-        <s-app-nav-item
-            label="Dashboard"
-            icon="HomeIcon"
+        <s-link
             href="/"
-        ></s-app-nav-item>
+        >
+        </s-link>
 
-        <s-app-nav-item
-            label="Products"
-            icon="Package2Icon"
+        <s-link
             href="/products"
-        ></s-app-nav-item>
+        >
+        </s-link>
 
-        <s-app-nav-item
-            label="Settings"
-            icon="SettingsIcon"
+        <s-link
             href="/settings"
-        ></s-app-nav-item>
+        >
+        </s-link>
     </s-app-nav>
 
     @inertia

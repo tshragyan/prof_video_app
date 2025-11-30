@@ -8,15 +8,17 @@
             <s-grid-item gridColumn="span 1" border="base" borderStyle="dashed">
                 <s-box padding="base" background="subdued" border="base" borderRadius="base">
                     <s-heading title="now You Are using Basic plan">Current Plan  <s-icon type="home" /></s-heading>
-
                 </s-box>
             </s-grid-item>
             <s-grid-item gridColumn="span 1" border="base" borderStyle="dashed">
-                Total Orders
+                <s-box padding="base" background="subdued" border="base" borderRadius="base">
+                    <s-heading title="now You Are using Basic plan">Total Orders <s-icon type="order" /></s-heading>
+                </s-box>
             </s-grid-item>
             <s-grid-item gridColumn="span 1" border="base" borderStyle="dashed">
-                <s-heading>Your shop</s-heading>
-                {{shop}}
+                <s-box padding="base" background="subdued" border="base" borderRadius="base">
+                    <s-heading title="now You Are using Basic plan">{{shop}} <s-icon type="person" /></s-heading>
+                </s-box>
             </s-grid-item>
         </s-grid>
     </s-page>

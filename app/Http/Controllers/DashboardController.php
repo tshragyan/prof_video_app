@@ -12,11 +12,9 @@ class DashboardController extends Controller
     public function home(Request $request)
     {
         /** @var User $user */
-        $user = auth()->user();
             return Inertia::render('Home', [
                 'message' => 'Welcome Daniel!',
                 'shop' => $request->get('shop'),
-                'user' => $user->shopify_username,
             ]);
         }
 }

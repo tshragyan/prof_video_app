@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Services\ShopifyService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -46,11 +47,8 @@ class User extends Authenticatable
       self::STATUS_INACTIVE => 'Inactive',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    private $service = null;
+
     protected $fillable = [
         'name',
         'email',
@@ -73,6 +71,7 @@ class User extends Authenticatable
         'plan_id',
         'shopify_username',
     ];
+
 
     public function getDomain(): string
     {
@@ -101,5 +100,14 @@ class User extends Authenticatable
     public function products(): HasMany
     {
         return $this->hasMany(Video::class);
+    }
+
+    public function getService(): ShopifyService
+    {
+        if (!$this->service) {
+            $this->service = new ShopifyService($this);
+        }
+
+        return $this->service;
     }
 }

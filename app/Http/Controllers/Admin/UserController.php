@@ -48,7 +48,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $service = $user->getService();
+
     }
 
     /**

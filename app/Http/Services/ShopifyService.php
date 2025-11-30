@@ -24,4 +24,6 @@ class ShopifyService
         $session = new Session($user->getDomain(), $user->shopify_token);
         $this->api->setSession($session);
     }
+
+
 }

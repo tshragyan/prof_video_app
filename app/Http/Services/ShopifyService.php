@@ -16,7 +16,7 @@ class ShopifyService
 
     public function __construct(User $user)
     {
-        $this->appId = config('service.shopify.app_id');
+        $this->appId = config('services.shopify.app_id');
         $options = (new Options())
             ->setVersion('2025-10')
             ->setType(false);

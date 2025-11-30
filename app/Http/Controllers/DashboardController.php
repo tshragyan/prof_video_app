@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShopifyErrorLog;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,31 +11,12 @@ class DashboardController extends Controller
 {
     public function home(Request $request)
     {
-        ShopifyErrorLog::query()->create(
-            [
-                'user_id' => 1,
-                'method' => 'dashboard',
-                'data' => 'in dashboard',
-
-            ]
-        );
-        try {
-
+        /** @var User $user */
+        $user = auth()->user();
             return Inertia::render('Home', [
                 'message' => 'Welcome Daniel!',
-                'shop' => $request->get('shop')
+                'shop' => $request->get('shop'),
+                'user' => $user->shopify_username,
             ]);
-        } catch (\Throwable $e) {
-
-
-            ShopifyErrorLog::query()->create(
-                [
-                    'user_id' => 1,
-                    'method' => 'dashboard',
-                    'data' => $e->getMessage() . ' ' . $e->getFile() . ' ' . $e->getLine(),
-
-                ]
-            );
         }
-    }
 }

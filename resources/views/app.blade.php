@@ -8,10 +8,10 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-api_key: {{config('shopify.api_key')}}
+api_key: {{config('services.shopify.api_key')}}
 host: {{request('host')}}
 <s-app-provider
-    api-key="{{ config('shopify.api_key') }}"
+    api-key="{{ config('services.shopify.api_key') }}"
     host="{{ request('host') }}"
 >
     <s-app-nav>

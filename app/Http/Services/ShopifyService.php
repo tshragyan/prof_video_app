@@ -21,7 +21,7 @@ class ShopifyService
             ->setVersion('2025-10')
             ->setType(false);
         $this->api = new BasicShopifyAPI($options);
-        $session = new Session($user->getDomain(), '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');
+        $session = new Session($user->getDomain(), $user->shopify_token);
         $this->api->setSession($session);
     }
 

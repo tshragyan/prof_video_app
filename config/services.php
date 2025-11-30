@@ -29,6 +29,7 @@ return [
         'api_key' => env('SHOPIFY_API_KEY'),
         'client_secret' => env('SHOPIFY_CLIENT_SECRET'),
         'scopes' => env('SHOPIFY_SCOPES'),
+        'app_id' => env('SHOPIFY_APP_ID')
     ],
 
     'ses' => [

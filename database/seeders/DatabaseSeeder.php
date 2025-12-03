@@ -52,36 +52,36 @@ class DatabaseSeeder extends Seeder
 //                ]);
 //        }
 
-        for ($i = 3; $i < 10; $i++) {
-            Video::query()
-                ->create([
-                    'title' => Str::random(6),
-                    'src' => 'https://www.youtube.com/watch?v=GMqWWpEZnnQ',
-                    'size' => '100',
-                    'user_id' => 1,
-                    'product_id' => ++$i,
-                ]);
-        }
+//        for ($i = 3; $i < 10; $i++) {
+//            Video::query()
+//                ->create([
+//                    'title' => Str::random(6),
+//                    'src' => 'https://www.youtube.com/watch?v=GMqWWpEZnnQ',
+//                    'size' => '100',
+//                    'user_id' => 1,
+//                    'product_id' => ++$i,
+//                ]);
+//        }
 
 
-        PlanChargeRequest::query()
-            ->create([
-                'user_id' => 1,
-                'plan_id' => 1,
-                'type' => PlanChargeRequest::TYPE_ANNUAL,
-                'status' => PlanChargeRequest::STATUS_ACTIVE,
-                'external_id' => 'abcdef',
-                'activated_at' => time(),
-                'shopify_data' => 'abcdef',
-            ]);
+//        PlanChargeRequest::query()
+//            ->create([
+//                'user_id' => 1,
+//                'plan_id' => 1,
+//                'type' => PlanChargeRequest::TYPE_ANNUAL,
+//                'status' => PlanChargeRequest::STATUS_ACTIVE,
+//                'external_id' => 'abcdef',
+//                'activated_at' => time(),
+//                'shopify_data' => 'abcdef',
+//            ]);
 
 
-        ShopifyErrorLog::query()
-            ->create([
-                'user_id' => 1,
-                'method' => 'getProducts',
-                'data' => '{}',
-            ]);
+//        ShopifyErrorLog::query()
+//            ->create([
+//                'user_id' => 1,
+//                'method' => 'getProducts',
+//                'data' => '{}',
+//            ]);
 
 
 

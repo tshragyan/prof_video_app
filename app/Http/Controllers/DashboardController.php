@@ -11,7 +11,9 @@ class DashboardController extends Controller
 {
     public function home(Request $request)
     {
-
+        /** @var User $user */
+        $user = auth()->user();
+        dd($user->getService()->getStoreInfo());
         ShopifyErrorLog::query()->create(
             [
                 'user_id' => 6,

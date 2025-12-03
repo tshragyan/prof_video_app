@@ -117,7 +117,7 @@ class AuthController extends Controller
             return response('Missing shop parameter', 400);
         }
         /** @var User $user */
-        $user = User::query()->where('shopify_username', '=', 'shop')->first();
+        $user = User::query()->where('shopify_username', '=', $shop)->first();
 
         if ($user) {
             Auth::login($user);

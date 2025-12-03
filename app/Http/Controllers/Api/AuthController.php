@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ShopifyErrorLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
@@ -36,6 +37,7 @@ class AuthController extends Controller
         $hmac = $request->get('hmac');
         $code = $request->get('code');
         $state = $request->get('state');
+        $host = $request->get('host');
 
         if (!$shop || !$hmac || !$code) {
             return response('Invalid request', 400);
@@ -87,9 +89,8 @@ class AuthController extends Controller
         );
 
         auth()->login($user);
-
         session(['shopify_shop' => $shop]);
-
+        $host = cache()->get('host_' . $shop);
         ShopifyErrorLog::query()->create(
             [
                 'user_id' => 6,
@@ -98,12 +99,11 @@ class AuthController extends Controller
 
             ]
         );
-        return redirect()->to(route('dashboard.home', ['shop' => $shop]));
+        return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $host]));
     }
 
     public function install(Request $request)
     {
-
         ShopifyErrorLog::query()->create(
             [
                 'user_id' => 6,
@@ -111,21 +111,29 @@ class AuthController extends Controller
                 'data' => json_encode($request->all()),
             ]
         );
+
         $shop = $request->get('shop');
         if (!$shop) {
             return response('Missing shop parameter', 400);
         }
+        $user = User::query()->where('shop', '=', 'shopify_username')->first();
 
-        $nonce = bin2hex(random_bytes(16));
-        cache()->put($shop. '_state', $nonce);
-        $installUrl = "https://{$shop}/admin/oauth/authorize?" . http_build_query([
-                'client_id' => $this->apiKey,
-                'scope' => $this->scopes,
-                'redirect_uri' => $this->redirectUri,
-                'state' => $nonce,
-            ]);
+        if ($user) {
+            Auth::login($user);
+            return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $request->get('host') ]));
+        } else {
+            $nonce = bin2hex(random_bytes(16));
+            cache()->put($shop. '_state', $nonce);
+            cache()->put('host_' . $shop, $request->get('host'));
+            $installUrl = "https://{$shop}/admin/oauth/authorize?" . http_build_query([
+                    'client_id' => $this->apiKey,
+                    'scope' => $this->scopes,
+                    'redirect_uri' => $this->redirectUri,
+                    'state' => $nonce,
+                ]);
 
-        return redirect()->away($installUrl);
+            return redirect()->away($installUrl);
+        }
     }
 
     public function apiCallback(Request $request)

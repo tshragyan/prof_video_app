@@ -27,7 +27,7 @@ class AuthController extends Controller
     {
         ShopifyErrorLog::query()->create(
             [
-                'user_id' => 1,
+                'user_id' => 6,
                 'method' => 'callback',
                 'data' => json_encode($request->all()),
             ]
@@ -92,7 +92,7 @@ class AuthController extends Controller
 
         ShopifyErrorLog::query()->create(
             [
-                'user_id' => 1,
+                'user_id' => 6,
                 'method' => 'redirect to dashboard',
                 'data' => '{}',
 
@@ -106,7 +106,7 @@ class AuthController extends Controller
 
         ShopifyErrorLog::query()->create(
             [
-                'user_id' => 1,
+                'user_id' => 6,
                 'method' => 'install',
                 'data' => json_encode($request->all()),
             ]

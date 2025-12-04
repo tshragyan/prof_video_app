@@ -29,9 +29,6 @@ class ShopifyService
     {
         $query = 'query ShopShow {
                       shop {
-                        accountOwner {
-                          name
-                        }
                         billingAddress {
                           address1
                           address2

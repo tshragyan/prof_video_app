@@ -108,7 +108,7 @@ class AuthController extends Controller
 
             ]
         );
-        return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $host, 'request_data' => $request->all()]));
+        return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $host]));
     }
 
     public function install(Request $request)

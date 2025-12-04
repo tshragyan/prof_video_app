@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ShopifyErrorLog;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,6 +17,12 @@ class CheckShopifyHost
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+        ShopifyErrorLog::query()->create([
+           'user_id' => 5,
+           'method' => 'middleware',
+           'data' => json_encode($request->all())
+        ]);
 
         /** @var User $user */
         $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();

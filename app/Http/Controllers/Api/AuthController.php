@@ -82,11 +82,20 @@ class AuthController extends Controller
                 'role' => User::ROLES_USER,
                 'email' => 'user@email.com' . rand(1, 9999),
                 'shopify_id' => 1246654,
-                'shopify_data' => 1246654,
+                'shopify_data' => '[]',
                 'name' => 'user',
                 'status' => User::STATUS_INACTIVE,
             ]
         );
+
+        if (empty(json_decode($user->shopify_data))) {
+            $shopData = $user->getService()->getStoreInfo();
+            $user->shopify_data = json_encode($shopData);
+            $user->shopify_id = $shopData['id'];
+            $user->email = $shopData['email'];
+            $user->name = $shopData['name'];
+            $user->save();
+        }
 
         auth()->login($user);
         session(['shopify_shop' => $shop]);

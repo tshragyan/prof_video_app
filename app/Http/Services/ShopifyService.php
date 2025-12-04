@@ -4,6 +4,7 @@
 namespace App\Http\Services;
 
 
+use App\Models\ShopifyErrorLog;
 use App\Models\User;
 use Gnikyt\BasicShopifyAPI\BasicShopifyAPI;
 use Gnikyt\BasicShopifyAPI\Options;
@@ -12,6 +13,7 @@ use Gnikyt\BasicShopifyAPI\Session;
 class ShopifyService
 {
     private string $appId;
+    private User $user;
     private BasicShopifyAPI $api;
 
     public function __construct(User $user)
@@ -23,6 +25,7 @@ class ShopifyService
         $this->api = new BasicShopifyAPI($options);
         $session = new Session($user->getDomain(), $user->shopify_token);
         $this->api->setSession($session);
+        $this->user = $user;
     }
 
     public function getStoreInfo()
@@ -52,8 +55,19 @@ class ShopifyService
                         url
                       }
                     }';
+        $response = $this->api->graph($query);
 
-        return $this->api->graph($query);
+        if ($response['errors']) {
+            ShopifyErrorLog::query()->create([
+                'usr_id' => $this->user->id,
+                'method' => 'getStoreInfo',
+                'data' => json_encode($response['errors'])
+            ]);
+
+            return [];
+        }
+
+        return $this->api->graph($query)['body']['container']['data']['shop'];
     }
 
 

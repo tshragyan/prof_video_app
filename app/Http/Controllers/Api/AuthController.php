@@ -114,6 +114,14 @@ class AuthController extends Controller
 
         $shop = $request->get('shop');
         if (!$shop) {
+
+            ShopifyErrorLog::query()->create(
+                [
+                    'user_id' => 6,
+                    'method' => 'install',
+                    'data' => 'missing shop parameter',
+                ]
+            );
             return response('Missing shop parameter', 400);
         }
 
@@ -126,6 +134,16 @@ class AuthController extends Controller
                 'redirect_uri' => $this->redirectUri,
                 'state' => $nonce,
             ]);
+
+
+
+        ShopifyErrorLog::query()->create(
+            [
+                'user_id' => 6,
+                'method' => 'install',
+                'data' => 'redirecting',
+            ]
+        );
 
         return redirect()->away($installUrl);
     }

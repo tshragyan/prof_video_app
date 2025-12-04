@@ -18,11 +18,10 @@ class CheckShopifyHost
     {
 
         /** @var User $user */
-//        $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
-//        dd($user->getService()->getStoreInfo()['body']);
-//        auth()->login($user);
-//        $user->shopify_data =  json_encode($user->getService()->getStoreInfo());
-//        $user->save();
+        $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
+        auth()->login($user);
+        $user->shopify_data =  json_encode($user->getService()->getStoreInfo());
+        $user->save();
 
 //        if (!app()->environment('local') || $request->getHost() === 'localhost') {
 //            $query = $request->all();

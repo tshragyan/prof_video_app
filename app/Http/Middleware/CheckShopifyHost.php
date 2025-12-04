@@ -32,11 +32,6 @@ class CheckShopifyHost
 
         if (!app()->environment('local') || $request->getHost() === 'localhost') {
             $query = $request->all();
-
-            if (!isset($query['hmac']) && isset($query['request_data'])) {
-                $query = $query['request_data'];
-            }
-
             $hmac = $query['hmac'] ?? null;
 
             if (!$hmac) {

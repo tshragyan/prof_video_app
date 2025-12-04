@@ -21,13 +21,7 @@ use App\Models\Video;
             @foreach($videos as $video)
                 <tr>
                     @foreach(\App\Models\Video::$columns as $column)
-                        @if($column == 'product_id')
-                            <td scope="row">
-                                <a class="nav-link" aria-current="page" href="{{route('admin.products.show', ['product' => $video->$column])}}">
-                                    {{$video->product->title}}
-                                </a>
-                            </td>
-                        @elseif($column == 'user_id')
+                        @if($column == 'user_id')
                             <td scope="row">
                                 <a class="nav-link" aria-current="page" href="{{route('admin.users.show', ['user' => $video->$column])}}">
                                     {{$video->user->name}}

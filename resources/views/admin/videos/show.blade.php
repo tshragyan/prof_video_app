@@ -6,15 +6,7 @@
     @foreach(\App\Models\Video::$columns as $column)
 
         <ul class="list-group list-group-horizontal">
-            @if($column == 'product_id')
-                <li class="list-group-item list-group-item-light" style="width:50%"><b>{{ $column }}</b></li>
-                <li class="list-group-item" style="width:50%">
-                    <a class="nav-link" aria-current="page"
-                       href="{{route('admin.products.show', ['product' => $video->$column])}}">
-                        {{$video->product->title}}
-                    </a>
-                </li>
-            @elseif($column == 'user_id')
+            @if($column == 'user_id')
                 <li class="list-group-item list-group-item-light" style="width:50%"><b>{{ $column }}</b></li>
                 <li class="list-group-item" style="width:50%">
                     <a

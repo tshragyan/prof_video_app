@@ -28,7 +28,6 @@ class Video extends Model
         'src',
         'size',
         'user_id',
-        'product_id',
     ];
 
     public static array $columns = [
@@ -37,16 +36,10 @@ class Video extends Model
         'src',
         'size',
         'user_id',
-        'product_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
     }
 }

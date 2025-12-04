@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer $user_id
  * @property integer $shopify_data
  * @property User $user
- * @property Video $video
  */
 class Product extends Model
 {
@@ -38,10 +37,5 @@ class Product extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function video(): HasOne
-    {
-        return $this->hasOne(Video::class);
     }
 }

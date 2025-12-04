@@ -32,13 +32,6 @@ class ShopifyService
                         accountOwner {
                           name
                         }
-                        alerts {
-                          action {
-                            title
-                            url
-                          }
-                          description
-                        }
                         billingAddress {
                           address1
                           address2
@@ -53,17 +46,12 @@ class ShopifyService
                           provinceCode
                           zip
                         }
-                        checkoutApiSupported
                         contactEmail
                         createdAt
                         email
                         id
                         myshopifyDomain
                         name
-                        primaryDomain {
-                          host
-                          id
-                        }
                         url
                       }
                     }';

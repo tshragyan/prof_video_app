@@ -26,9 +26,9 @@ class CheckShopifyHost
 
         /** @var User $user */
         $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
-        auth()->login($user);
-        $user->shopify_data =  json_encode($user->getService()->getStoreInfo());
-        $user->save();
+        if ($user) {
+            auth()->login($user);
+        }
 
 //        if (!app()->environment('local') || $request->getHost() === 'localhost') {
 //            $query = $request->all();

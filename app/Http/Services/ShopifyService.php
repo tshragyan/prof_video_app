@@ -56,52 +56,15 @@ class ShopifyService
                         checkoutApiSupported
                         contactEmail
                         createdAt
-                        currencyCode
-                        currencyFormats {
-                          moneyFormat
-                          moneyInEmailsFormat
-                          moneyWithCurrencyFormat
-                          moneyWithCurrencyInEmailsFormat
-                        }
-                        customerAccounts
-                        description
                         email
-                        enabledPresentmentCurrencies
-                        fulfillmentServices {
-                          handle
-                          serviceName
-                        }
-                        ianaTimezone
                         id
-                        marketingSmsConsentEnabledAtCheckout
                         myshopifyDomain
                         name
-                        paymentSettings {
-                          supportedDigitalWallets
-                        }
-                        plan {
-                          displayName
-                          partnerDevelopment
-                          shopifyPlus
-                        }
                         primaryDomain {
                           host
                           id
                         }
-                        productTypes(first: 250) {
-                          edges {
-                            node
-                          }
-                        }
-                        setupRequired
-                        shipsToCountries
-                        taxesIncluded
-                        taxShipping
-                        timezoneAbbreviation
-                        transactionalSmsDisabled
-                        updatedAt
                         url
-                        weightUnit
                       }
                     }';
 

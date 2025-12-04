@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\PlanChargeRequestController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\VideoController as ApiVideoController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
-    Route::get('/videos', [VideoController::class, 'list'])->name('videos.list');
+    Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {
         Route::get('install', [AuthController::class, 'install'])->name('shopify.install');
         Route::get('callback', [AuthController::class, 'callback'])->name('callback');

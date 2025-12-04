@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('auth')->name('shopify.')->group(function() {
-    Route::get('auth/install', [AuthController::class, 'install'])->name('shopify.install');
+    Route::get('install', [AuthController::class, 'install'])->name('shopify.install');
     Route::get('callback', [AuthController::class, 'callback'])->name('callback');
 });
 

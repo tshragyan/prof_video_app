@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+    Route::get('/videos', [VideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {
         Route::get('install', [AuthController::class, 'install'])->name('shopify.install');
         Route::get('callback', [AuthController::class, 'callback'])->name('callback');

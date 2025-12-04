@@ -10,7 +10,7 @@
 <body>
     <s-app-nav>
         <s-link href="/" rel="home">Home</s-link>
-        <s-link href="/templates">Templates</s-link>
+        <s-link href="{{route('videos.list')}}">Videos</s-link>
         <s-link href="/settings">Settings</s-link>
     </s-app-nav>
 

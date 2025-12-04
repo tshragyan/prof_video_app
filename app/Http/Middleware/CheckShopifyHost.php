@@ -24,23 +24,23 @@ class CheckShopifyHost
 //        $user->shopify_data =  json_encode($user->getService()->getStoreInfo());
 //        $user->save();
 
-        if (!app()->environment('local') || $request->getHost() === 'localhost') {
-            $query = $request->all();
-            $hmac = $query['hmac'] ?? null;
-
-            if (!$hmac) {
-                return redirect(route('access_denied'));
-            }
-
-            unset($query['hmac']);
-            ksort($query);
-            $queryString = urldecode(http_build_query($query));
-            $calculatedHmac = hash_hmac('sha256', $queryString, config('services.shopify.client_secret'));
-
-            if (!hash_equals($hmac, $calculatedHmac)) {
-                return redirect(route('access_denied'));
-            }
-        }
+//        if (!app()->environment('local') || $request->getHost() === 'localhost') {
+//            $query = $request->all();
+//            $hmac = $query['hmac'] ?? null;
+//
+//            if (!$hmac) {
+//                return redirect(route('access_denied'));
+//            }
+//
+//            unset($query['hmac']);
+//            ksort($query);
+//            $queryString = urldecode(http_build_query($query));
+//            $calculatedHmac = hash_hmac('sha256', $queryString, config('services.shopify.client_secret'));
+//
+//            if (!hash_equals($hmac, $calculatedHmac)) {
+//                return redirect(route('access_denied'));
+//            }
+//        }
 
         return $next($request);
     }

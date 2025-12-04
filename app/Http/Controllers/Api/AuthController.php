@@ -120,8 +120,7 @@ class AuthController extends Controller
         $user = User::query()->where('shopify_username', '=', $shop)->first();
 
         if ($user) {
-            Auth::login($user);
-            return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $request->get('host') ]));
+            return redirect()->to(route('dashboard.home', ['shop' => $shop, 'host' => $request->get('host'), 'requestData' => $request->all()]));
         } else {
             $nonce = bin2hex(random_bytes(16));
             cache()->put($shop. '_state', $nonce);

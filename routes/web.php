@@ -23,12 +23,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('auth/install', [AuthController::class, 'install'])->name('shopify.install');
+
+Route::prefix('auth')->name('shopify.')->group(function() {
+    Route::get('auth/install', [AuthController::class, 'install'])->name('shopify.install');
+    Route::get('callback', [AuthController::class, 'callback'])->name('callback');
+});
+
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
-    Route::prefix('auth')->name('shopify.')->group(function() {
-        Route::get('callback', [AuthController::class, 'callback'])->name('callback');
-    });
 });
 
 Route::get('/access-denied', function () {

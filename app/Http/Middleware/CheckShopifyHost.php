@@ -35,6 +35,7 @@ class CheckShopifyHost
 
             if (!isset($query['hmac']) && isset($query['request_data'])) {
                 $query = $query['request_data'];
+                dd($query);
             }
 
             $hmac = $query['hmac'] ?? null;

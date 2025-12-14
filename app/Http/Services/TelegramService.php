@@ -38,7 +38,7 @@ class TelegramService
             limit: 2
         );
 
-        $path = storage_path('app/telegram_bot/videos');
+        $path = storage_path('app/public/telegram_bot/videos');
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 0755, true);

@@ -29,7 +29,7 @@ class TelegramService
 //        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSKvz3cgvaY');
 //        dd(json_encode($message));
         dd(json_encode($this->client->channels->getMessages(
-            channel: 1257928066,
+            channel: '@vinsteBot',
         )));
     }
 

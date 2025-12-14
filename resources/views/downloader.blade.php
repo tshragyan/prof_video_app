@@ -11,7 +11,7 @@
 <body>
 <form action="{{route('download.insta')}}" method="post">
     @csrf
-    <input type="text" placeholder="linky stax dir im ser" class="form-control">
+    <input type="text" placeholder="linky stax dir im ser" name="insta-url" class="form-control">
     <button class="btn btn-success">download</button>
 </form>
 </body>

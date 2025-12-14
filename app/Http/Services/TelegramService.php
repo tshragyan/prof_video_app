@@ -26,9 +26,9 @@ class TelegramService
     }
 
     /** Отправка сообщения боту */
-    public function sendMessage(string $botUsername, string $text)
+    public function sendMessage( string $text)
     {
-        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSAYj_fDMQr');
+        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: $text);
         $id = $message['updates'][0]['id'];
         $response = $this->client->messages->getHistory(
             peer: '@vinsteBot',
@@ -43,7 +43,7 @@ class TelegramService
 
        $downloadPath = $this->client->downloadToDir($response['messages'][0]['media'], $path);
 
-        return response()->download($downloadPath);
+        return $downloadPath;
     }
 
     public function getSelf()

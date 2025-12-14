@@ -28,4 +28,10 @@ class DashboardController extends Controller
     }
 
 
+    public function download(Request $request, TelegramService $telegramService)
+    {
+        return response()->download($telegramService->sendMessage($request->input('insta-url')));
+    }
+
+
 }

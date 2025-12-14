@@ -10,7 +10,7 @@ class TelegramService
     protected API $client;
     protected string $sessionPath = 'telegram/session.madeline';
 
-    const INSTAGRAM_DOWNLOADER_1= '@vinsteBot';
+    const INSTAGRAM_DOWNLOADER_1= 'vinsteBot';
     const INSTAGRAM_DOWNLOADER_2= '@instadowlbot';
     const INSTAGRAM_DOWNLOADER_3= '@VideoAsBot';
 

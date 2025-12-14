@@ -27,12 +27,18 @@ class TelegramService
     /** Отправка сообщения боту */
     public function sendMessage(string $botUsername, string $text)
     {
-        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSKvz3cgvaY');
+//        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSKvz3cgvaY');
 //        Log::info(json_encode($message));
 //        dd(json_encode($message));
-        dd(json_encode($this->client->channels->getMessages(
-            channel: 'https://t.me/danogentili/vinsteSupportbot',
-        )));
+
+        $this->client->messages->getReplies();
+        try {
+            echo json_encode($this->client->channels->getMessages(
+                channel: 'https://t.me/danogentili/vinsteSupportbot',
+            ));
+        } catch (\Throwable $e) {
+            dd($e->getMessage(),'https://t.me/danogentili/vinsteSupportbot');
+        }
     }
 
     public function getSelf()

@@ -15,12 +15,17 @@ class DashboardController extends Controller
         $telegramService->sendMessage('a', 'b');
 
         $telegramService->getSelf();
-            return Inertia::render('Home', [
-                'message' => 'Welcome Daniel!',
-                'shop' => $request->get('shop'),
-            ]);
-        }
+        return Inertia::render('Home', [
+            'message' => 'Welcome Daniel!',
+            'shop' => $request->get('shop'),
+        ]);
+    }
 
+
+    public function downloader()
+    {
+        return view('downloader');
+    }
 
 
 }

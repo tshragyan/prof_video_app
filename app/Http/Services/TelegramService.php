@@ -28,31 +28,22 @@ class TelegramService
     /** Отправка сообщения боту */
     public function sendMessage(string $botUsername, string $text)
     {
-//        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSAYj_fDMQr');
-//        Log::info(json_encode($message));
-//        dd(json_encode($message));
-
+        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSAYj_fDMQr');
+        $id = $message['updates'][0]['id'];
         $response = $this->client->messages->getHistory(
             peer: '@vinsteBot',
-            min_id: 12556,
+            min_id: $id,
             limit: 2
         );
-
         $path = storage_path('app/public/telegram_bot/videos');
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 0755, true);
         }
 
-        try {
-            dd($this->client->downloadToDir($response['messages'][0]['media'], $path));
+       $downloadPath = $this->client->downloadToDir($response['messages'][0]['media'], $path);
 
-        } catch (\Throwable $e) {
-            dd($e->getMessage(), json_encode($response));
-        }
-
-//        $this->client->messages->getReplies();
-            dd($this->client->messages->getMessages(id: [12505]));
+        return response()->download($downloadPath);
     }
 
     public function getSelf()

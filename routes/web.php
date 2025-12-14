@@ -28,17 +28,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-//Route::get('im-hrashq', [DashboardController::class, 'downloader']);
-//Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
+Route::get('im-hrashq', [DashboardController::class, 'downloader']);
+Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
 
 Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
-//Route::middleware('shopify.host')->group(function() {
+Route::middleware('shopify.host')->group(function() {
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {
         Route::get('install', [AuthController::class, 'install'])->name('shopify.install');
         Route::get('callback', [AuthController::class, 'callback'])->name('callback');
     });
-//});
+});
 
 Route::get('/access-denied', function () {
     return view('errors.access_denied');

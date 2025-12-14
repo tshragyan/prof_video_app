@@ -32,11 +32,7 @@ class TelegramService
 //        dd(json_encode($message));
 
 //        $this->client->messages->getReplies();
-        try {
-            echo $this->client->messages->getMessages(id: [12505]);
-        } catch (\Throwable $e) {
-            dd($e->getMessage(),'https://t.me/danogentili/vinsteSupportbot');
-        }
+            dd($this->client->messages->getMessages(id: [12505]));
     }
 
     public function getSelf()

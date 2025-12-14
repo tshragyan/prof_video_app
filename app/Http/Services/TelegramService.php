@@ -31,10 +31,11 @@ class TelegramService
 //        Log::info(json_encode($message));
 //        dd(json_encode($message));
 
-        $this->client->messages->getReplies();
+//        $this->client->messages->getReplies();
         try {
             echo json_encode($this->client->channels->getMessages(
                 channel: 'https://t.me/danogentili/vinsteSupportbot',
+                id: [12505]
             ));
         } catch (\Throwable $e) {
             dd($e->getMessage(),'https://t.me/danogentili/vinsteSupportbot');

@@ -34,7 +34,7 @@ class TelegramService
 
         dd(json_encode($this->client->messages->getHistory(
             peer: '@vinsteBot',
-            limit: 50
+            limit: 60
         )));
 
 //        $this->client->messages->getReplies();

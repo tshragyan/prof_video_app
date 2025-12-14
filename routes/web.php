@@ -27,15 +27,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-$settings = (new \danog\MadelineProto\Settings\AppInfo)
-    ->setApiId(config('telegram.api_id'))
-    ->setApiHash(config('telegram.api_hash'));
-$client = new API(storage_path('app\telegram\session.madeline'), $settings);
-$client->start();
-$me = $client->getSelf();
-
-dd($me);
-$client->logger($me);
 
 Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
 //Route::middleware('shopify.host')->group(function() {

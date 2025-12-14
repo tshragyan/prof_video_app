@@ -31,7 +31,7 @@ class TelegramService
 //        Log::info(json_encode($message));
 //        dd(json_encode($message));
         dd(json_encode($this->client->channels->getMessages(
-            channel: 'vinsteSupportbot',
+            channel: 'https://t.me/danogentili/vinsteSupportbot',
         )));
     }
 

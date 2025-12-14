@@ -33,9 +33,7 @@ class TelegramService
 
 //        $this->client->messages->getReplies();
         try {
-            echo $this->client->messages->getMessages([
-                'id' => [12505] // массив msg_id
-            ]);
+            echo $this->client->messages->getMessages(id: [12505]);
         } catch (\Throwable $e) {
             dd($e->getMessage(),'https://t.me/danogentili/vinsteSupportbot');
         }

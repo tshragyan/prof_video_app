@@ -26,7 +26,7 @@ class TelegramService
     /** Отправка сообщения боту */
     public function sendMessage(string $botUsername, string $text)
     {
-        return $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSKvz3cgvaY');
+        dd($this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSKvz3cgvaY'));
     }
 
     public function getSelf()

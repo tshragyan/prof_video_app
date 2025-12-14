@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('im-hrashq', [DashboardController::class, 'downloader']);
-Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
+//Route::get('im-hrashq', [DashboardController::class, 'downloader']);
+//Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
 
 Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
 Route::middleware('shopify.host')->group(function() {

@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('embeded')->name('embeded')->group(function () {
-    Route::prefix('video')->name('video,')->group(function() {
-        Route::post('upload', [VideoController::class, 'upload'])->name('upload');
-    });
+Route::prefix('video')->name('video,')->group(function () {
+    Route::post('upload', [VideoController::class, 'upload'])->name('upload');
 });

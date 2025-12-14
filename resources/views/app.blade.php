@@ -4,6 +4,11 @@
     <meta name="shopify-api-key" content="{{config('services.shopify.api_key')}}" />
     <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
     <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
+    <script>
+        window.LARAVEL = {
+            app_url: '{{env('app_url')}}'
+        }
+    </script>
     @vite('resources/js/app.js')
     @vite('resources/css/app.css')
 </head>
@@ -17,4 +22,5 @@
     @inertia
 
 </body>
+
 </html>

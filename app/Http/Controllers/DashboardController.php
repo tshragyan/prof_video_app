@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\TelegramService;
 use App\Models\ShopifyErrorLog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,11 +10,16 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function home(Request $request)
+    public function home(Request $request, TelegramService $telegramService)
     {
-            return Inertia::render('Home', [
-                'message' => 'Welcome Daniel!',
-                'shop' => $request->get('shop'),
-            ]);
+
+        $telegramService->getSelf();
+//            return Inertia::render('Home', [
+//                'message' => 'Welcome Daniel!',
+//                'shop' => $request->get('shop'),
+//            ]);
         }
+
+
+
 }

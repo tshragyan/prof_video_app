@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\VideoController as ApiVideoController;
 use App\Http\Controllers\DashboardController;
+use danog\MadelineProto\API;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,14 +26,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('shopify.host')->group(function() {
-    Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+
+$settings = (new \danog\MadelineProto\Settings\AppInfo)
+    ->setApiId(config('telegram.api_id'))
+    ->setApiHash(config('telegram.api_hash'));
+$client = new API(storage_path('app\telegram\session.madeline'), $settings);
+$client->start();
+$me = $client->getSelf();
+
+dd($me);
+$client->logger($me);
+
+Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+//Route::middleware('shopify.host')->group(function() {
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {
         Route::get('install', [AuthController::class, 'install'])->name('shopify.install');
         Route::get('callback', [AuthController::class, 'callback'])->name('callback');
     });
-});
+//});
 
 Route::get('/access-denied', function () {
     return view('errors.access_denied');
@@ -66,4 +78,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
+//die('aaaaaa');
 

@@ -22,7 +22,8 @@ class VideoUpladRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'video' => 'required|file|mimetypes:video/mp4,video/quicktime|max:51200',
+            'videos' => 'required|array|max:5',
+            'videos.*' => 'required|file|mimetypes:video/mp4,video/quicktime|max:51200',
         ];
     }
 }

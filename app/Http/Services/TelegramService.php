@@ -31,6 +31,13 @@ class TelegramService
 //        Log::info(json_encode($message));
 //        dd(json_encode($message));
 
+        dd(json_encode($this->client->messages->getHistory([
+            'peer' => '@vinsteBot',
+            'offset_id' => 12025,
+            'add_offset' => 1,
+            'limit' => 50
+        ])));
+
 //        $this->client->messages->getReplies();
             dd($this->client->messages->getMessages(id: [12505]));
     }

@@ -34,7 +34,7 @@ class TelegramService
 //        $this->client->messages->getReplies();
         try {
             echo json_encode($this->client->channels->getMessages(
-                channel: 'https://t.me/danogentili/vinsteSupportbot',
+                channel: '@vinsteBot',
                 id: [12505]
             ));
         } catch (\Throwable $e) {

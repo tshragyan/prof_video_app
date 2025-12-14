@@ -28,7 +28,7 @@ class TelegramService
     public function sendMessage(string $botUsername, string $text)
     {
 //        12524
-        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSAYj_fDMQr');
+//        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: 'https://www.instagram.com/reel/DSAYj_fDMQr');
 //        Log::info(json_encode($message));
 //        dd(json_encode($message));
 

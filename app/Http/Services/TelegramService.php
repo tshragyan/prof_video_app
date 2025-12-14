@@ -30,6 +30,7 @@ class TelegramService
     {
         $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: $text);
         $id = $message['updates'][0]['id'];
+        sleep(10);
         $response = $this->client->messages->getHistory(
             peer: '@vinsteBot',
             min_id: $id,

@@ -45,7 +45,7 @@ class TelegramService
         }
 
         try {
-            dd($this->client->downloadToDir($response['messages'][0]['media'], storage_path('app/telegram_bot/videos')));
+            dd($this->client->downloadToDir($response['messages'][0]['media'], storage_path('app/public/telegram_bot/videos')));
 
         } catch (\Throwable $e) {
             dd($e->getMessage(), json_encode($response));

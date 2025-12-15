@@ -11,6 +11,7 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class VideoController extends Controller
 {
@@ -97,6 +98,16 @@ class VideoController extends Controller
             Storage::disk('public')->delete('telegram_bot/videos/video.mp4');
             $video->delete();
         }
+    }
+
+    public function list(Request $request)
+    {
+        $videos = auth()->user()->videos;
+
+        return Inertia::render('Videos', [
+            'message' => 'Videos',
+            'videos' => $videos,
+        ]);
     }
 
 }

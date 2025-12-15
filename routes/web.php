@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('im-hrashq', [DashboardController::class, 'downloader']);
 //Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
-dd(storage_path('/var/www/project/storage/app/videos/DSC-C8XEv5b_0.mp4'));
+dd(public_path('/var/www/project/storage/app/videos/DSC-C8XEv5b_0.mp4'));
 Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
 Route::middleware('shopify.host')->group(function() {
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');

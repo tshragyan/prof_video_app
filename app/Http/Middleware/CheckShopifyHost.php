@@ -17,13 +17,6 @@ class CheckShopifyHost
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        ShopifyErrorLog::query()->create([
-           'user_id' => 5,
-           'method' => 'middleware',
-           'data' => json_encode($request->all())
-        ]);
-
         /** @var User $user */
         $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
         if ($user) {

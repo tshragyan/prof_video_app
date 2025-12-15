@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UploadFromInstagram;
 use App\Http\Requests\VideoUpladRequest;
+use App\Http\Services\TelegramService;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Inertia\Inertia;
 
 class VideoController extends Controller
 {
@@ -21,7 +22,7 @@ class VideoController extends Controller
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('videos', $filename, 'public');
             /** @var User $user */
-            $user = User::query()->first();
+            $user = auth()->user();
 
             Video::query()
                 ->create([
@@ -29,6 +30,8 @@ class VideoController extends Controller
                     'user_id' => $user->id,
                     'size' => $file->getSize(),
                     'src' => asset('storage/' . $path),
+                    'from' => Video::PC_KEYWORD,
+                    'stored' => Video::STORED_LOCAL,
                 ]);
 
             $responseData[] = [
@@ -40,18 +43,60 @@ class VideoController extends Controller
         return response()->json(['data' => $responseData]);
     }
 
-    public function list(Request $request)
+    public function uploadFromInstagram(UploadFromInstagram $request, TelegramService $telegramService)
     {
-        $response = Http::get('https://www.instagram.com/reel/DR9WX-BEUQ4/');
-//        dd($response->body());
+        $url = $request->validated()['url'];
+
+        if (!str_starts_with(Video::INSTAGRAM_VIDEOS_PREFIX, $url)) {
+            return response(['error' => 'Invalid video url'], 400);
+        }
+
+        $message = $telegramService->sendMessage($url);
+        $uploadedVideo = $telegramService->getBotMessageVideoById($message['bot'], $message['id']);
 
         /** @var User $user */
-        $user = User::query()->first();
-//        $videos = auth()->user()->videos;
-        $videos = [];
-        return Inertia::render('Videos', [
-            'message' => 'Videos',
-            'videos' => $videos,
-        ]);
+        $user = auth()->user();
+
+        $video = Video::query()
+            ->create([
+                'title' => $title ?? 'video_1' . ($user->videos()->count() + 1),
+                'user_id' => $user->id,
+                'size' => $uploadedVideo['size'],
+                'src' => env('APP_URL') . '/storage' .explode('app', $uploadedVideo['path'])[1],
+                'from' => Video::PC_KEYWORD,
+                'stored' => Video::STORED_LOCAL,
+                'path' => $uploadedVideo['path']
+            ]);
+
+        return response(['url' => $video->src, 'id' => $video], 200);
     }
+
+    public function saveVideo()
+    {
+
+    }
+
+    public function removeVideos(Request $request)
+    {
+        $videos = $request->input('videos');
+
+        if (is_null($videos) || !is_array($videos)) {
+            return;
+        }
+
+        foreach ($videos as $videoItem) {
+            /** @var Video $video */
+            $video = Video::query()
+                ->where('id', '=', $videoItem)
+                ->first();
+
+            if (auth()->user()->id != $video->user_id) {
+                return;
+            }
+
+            Storage::disk('public')->delete('telegram_bot/videos/video.mp4');
+            $video->delete();
+        }
+    }
+
 }

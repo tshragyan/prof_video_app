@@ -31,9 +31,9 @@ use Illuminate\Support\Facades\Storage;
 
 //Route::get('im-hrashq', [DashboardController::class, 'downloader']);
 //Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
-dd(Storage::disk('public')->path('telegram_bot/videos'));
-Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+
 Route::middleware('shopify.host')->group(function() {
+    Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {
         Route::get('install', [AuthController::class, 'install'])->name('shopify.install');

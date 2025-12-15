@@ -10,11 +10,8 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function home(Request $request, TelegramService $telegramService)
+    public function home(Request $request)
     {
-        $telegramService->sendMessage('a', 'b');
-
-        $telegramService->getSelf();
         return Inertia::render('Home', [
             'message' => 'Welcome Daniel!',
             'shop' => $request->get('shop'),

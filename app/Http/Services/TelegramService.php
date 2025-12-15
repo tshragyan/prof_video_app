@@ -12,9 +12,15 @@ class TelegramService
     protected API $client;
     protected string $sessionPath = 'telegram/session.madeline';
 
-    const INSTAGRAM_DOWNLOADER_1= '@vinsteBot';
-    const INSTAGRAM_DOWNLOADER_2= '@instadowlbot';
-    const INSTAGRAM_DOWNLOADER_3= '@VideoAsBot';
+    const INSTAGRAM_VIDEO_DOWNLOADER_BOT_1 = '@vinsteBot';
+    const INSTAGRAM_VIDEO_DOWNLOADER_BOT_2 = '@instadowlbot';
+    const INSTAGRAM_VIDEO_DOWNLOADER_BOT_3 = '@VideoAsBot';
+
+    const INSTAGRAM_VIDEO_DOWNLOADER_BOTS_LIST = [
+        self::INSTAGRAM_VIDEO_DOWNLOADER_BOT_1,
+        self::INSTAGRAM_VIDEO_DOWNLOADER_BOT_2,
+        self::INSTAGRAM_VIDEO_DOWNLOADER_BOT_3,
+    ];
 
     public function __construct()
     {
@@ -25,26 +31,45 @@ class TelegramService
         $this->client->start();
     }
 
-    /** Отправка сообщения боту */
-    public function sendMessage( string $text)
+    public function sendMessage(string $text): array|null
     {
-//        $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: $text);
-//        $id = $message['updates'][0]['id'];
-//        sleep(10);
-//        $response = $this->client->messages->getHistory(
-//            peer: '@vinsteBot',
-//            min_id: $id,
-//            limit: 2
-//        );
-//        $path = storage_path('app/public/telegram_bot/videos');
-//
-//        if (!File::exists($path)) {
-//            File::makeDirectory($path, 0755, true);
-//        }
+        $data = null;
 
-//       $downloadPath = $this->client->downloadToDir($response['messages'][0]['media'], $path);
-//
-//        return $downloadPath;
+        foreach (self::INSTAGRAM_VIDEO_DOWNLOADER_BOTS_LIST as $bot) {
+            $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: $text);
+            $id = $message['updates'][0]['id'];
+
+            if (!is_null($id)) {
+                $data = [
+                    'id' => $id,
+                    'bot' => $bot
+                ];
+                break;
+            }
+        }
+
+        return $data;
+    }
+
+    public function getBotMessageVideoById(string $bot, int $id)
+    {
+        $response = $this->client->messages->getHistory(
+            peer: $bot,
+            min_id: $id,
+            limit: 2
+        );
+
+        $path = storage_path('app/public/telegram_bot/videos');
+        Storage::disk('public')->path('telegram_bot/videos');
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
+
+        $path = $this->client->downloadToDir($response['messages'][0]['media'], $path);
+
+
+        return ['path' => $path, 'size' => $response['messages'][0]['media']['document']['size']];
     }
 
     public function getSelf()
@@ -55,24 +80,23 @@ class TelegramService
     /** Получение новых сообщений от бота */
     public function getBotMessages(string $botUsername): array
     {
-//        $updates = $this->client->getUpdates(['offset' => 0, 'limit' => 50, 'timeout' => 0]);
-//
-//        $botId = $this->client->getPwrChat($botUsername)['id'];
-//
-//        $messages = [];
-//
-//        foreach ($updates as $update) {
-//            if (!isset($update['update']['message'])) continue;
-//
-//            $msg = $update['update']['message'];
-//
-//             фильтруем только сообщения от нужного бота
-//            if (($msg['peer_id']['user_id'] ?? null) != $botId) continue;
-//
-//            $messages[] = $msg;
-//        }
-//
-//        return $messages;
+        $updates = $this->client->getUpdates(['offset' => 0, 'limit' => 50, 'timeout' => 0]);
+
+        $botId = $this->client->getPwrChat($botUsername)['id'];
+
+        $messages = [];
+
+        foreach ($updates as $update) {
+            if (!isset($update['update']['message'])) continue;
+
+            $msg = $update['update']['message'];
+
+            if (($msg['peer_id']['user_id'] ?? null) != $botId) continue;
+
+            $messages[] = $msg;
+        }
+
+        return $messages;
     }
 
     /** Скачать видео если есть */

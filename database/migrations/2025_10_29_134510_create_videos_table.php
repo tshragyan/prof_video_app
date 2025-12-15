@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('src');
             $table->string('size');
             $table->unsignedBigInteger('user_id');
+            $table->string('from');
+            $table->string('external_url')->nullable();
+            $table->string('stored');
+            $table->boolean('saved')->default(false);
+            $table->string('path');
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')

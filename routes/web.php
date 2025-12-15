@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\VideoController as ApiVideoController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Video;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('im-hrashq', [DashboardController::class, 'downloader']);
 //Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
-dd(public_path('/var/www/project/storage/app/videos/DSC-C8XEv5b_0.mp4'));
-Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
+Storage::disk('public')->path('telegram_bot/videos');Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
 Route::middleware('shopify.host')->group(function() {
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');
     Route::prefix('auth')->name('shopify.')->group(function() {

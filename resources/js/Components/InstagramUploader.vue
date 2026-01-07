@@ -1,13 +1,9 @@
 <template>
     <s-modal id="instagram-modal" heading="Details">
-        <s-drop-zone
-            label="Upload"
-            accessibilityLabel="Upload Video"
-            accept="video/*"
-            multiple
-            @input="uploadFile"
-            @change="uploadFile"
-            border="none"
+        <s-text-field
+            label="Reel's Url"
+            value="Jaded Pixel"
+            placeholder="Copy And Past Instagram Reel's Url here"
         />
 
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">
@@ -31,7 +27,6 @@ async function uploadFile(e)
 {
     const video = e.target.files[0]
     const form = new FormData();
-    form.append("video", video);
 
     console.log(import.meta.env.VITE_APP_URL)
     try {

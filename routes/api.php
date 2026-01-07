@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('video')->name('video,')->group(function () {
+Route::prefix('video')->name('video.')->middleware(['shopify.auth'])->group(function () {
     Route::post('upload', [VideoController::class, 'upload'])->name('upload');
 });

@@ -36,6 +36,9 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import {initShopifyAppBridge} from "../shopify";
+import { getSessionToken } from '@shopify/app-bridge-utils';
+
 let videos = ref([])
 
 async function uploadFile(e) {
@@ -61,11 +64,14 @@ async function saveVideos() {
     videos.value.forEach((video, i) => {
         form.append('videos[]', video.file)
     });
+    let app = initShopifyAppBridge();
+    let token = getSessionToken(app);
 
     console.log(form)
     const response = await axios.post(import.meta.env.VITE_APP_URL + "/api/video/upload", form, {
         headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
         },
         onUploadProgress: (progressEvent) => {
         },

@@ -17,12 +17,6 @@ class CheckShopifyHost
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /** @var User $user */
-        $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
-        if ($user) {
-            auth()->login($user);
-        }
-
         if (!app()->environment('local') || $request->getHost() === 'localhost') {
             $query = $request->all();
             $hmac = $query['hmac'] ?? null;
@@ -38,6 +32,19 @@ class CheckShopifyHost
 
             if (!hash_equals($hmac, $calculatedHmac)) {
                 return redirect(route('access_denied'));
+            }
+
+            /** @var User $user */
+            $user = User::query()->where('shopify_username', '=', $request->get('shop'))->first();
+            if ($user) {
+                auth()->login($user);
+            }
+        } else {
+
+            /** @var User $user */
+            $user = User::query()->first();
+            if ($user) {
+                auth()->login($user);
             }
         }
 

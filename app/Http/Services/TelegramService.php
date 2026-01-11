@@ -36,7 +36,7 @@ class TelegramService
         $data = null;
 
         foreach (self::INSTAGRAM_VIDEO_DOWNLOADER_BOTS_LIST as $bot) {
-            $message = $this->client->messages->sendMessage(peer: self::INSTAGRAM_DOWNLOADER_1, message: $text);
+            $message = $this->client->messages->sendMessage(peer: $bot, message: $text);
             $id = $message['updates'][0]['id'];
 
             if (!is_null($id)) {

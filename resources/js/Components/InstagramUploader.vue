@@ -1,7 +1,7 @@
 <template>
     <s-modal id="instagram-modal" heading="Import from Instagram">
         <s-text-field
-            label="Pleas put reel url here"
+            label="Pleas put reel url here (example: https://www.instagram.com/reel)"
             placeholder="Copy And Past Instagram Reel Url here"
             :value="reelUrl.value"
             @input="changeInput"

@@ -40,7 +40,6 @@ async function importVideo(e) {
 
     const response = await axios.post("https://videocrat.com/api/video/import-from-instagram", form, {
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
         },
         onUploadProgress: (progressEvent) => {

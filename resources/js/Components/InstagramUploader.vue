@@ -33,7 +33,7 @@ async function importVideo(e) {
     const form = new FormData();
     let app = initShopifyAppBridge();
     let token = await getSessionToken(app);
-    form.append('url', reelUrl)
+    form.append('url', reelUrl.value)
 
     console.log("sending from instagram")
     console.log(import.meta.env.VITE_APP_URL)

@@ -33,6 +33,7 @@ class VideoController extends Controller
                     'src' => asset('storage/' . $path),
                     'from' => Video::PC_KEYWORD,
                     'stored' => Video::STORED_LOCAL,
+                    'path' => asset('storage/' . $path),
                 ]);
 
             $responseData[] = [

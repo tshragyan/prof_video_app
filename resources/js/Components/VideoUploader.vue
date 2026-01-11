@@ -67,7 +67,7 @@ async function saveVideos() {
     });
 
     let app = initShopifyAppBridge();
-    let token = getSessionToken(app);
+    let token = await getSessionToken(app);
 
     console.log('sending from video uploader')
     const response = await axios.post("https://videocrat.com/api/video/upload", form, {

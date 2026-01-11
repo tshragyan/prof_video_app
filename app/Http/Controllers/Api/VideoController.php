@@ -45,7 +45,7 @@ class VideoController extends Controller
         return response()->json(['data' => $responseData]);
     }
 
-    public function uploadFromInstagram(UploadFromInstagram $request, TelegramService $telegramService)
+    public function importFromInstagram(UploadFromInstagram $request, TelegramService $telegramService)
     {
         $url = $request->validated()['url'];
 

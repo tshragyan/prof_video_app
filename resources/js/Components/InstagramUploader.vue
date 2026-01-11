@@ -2,8 +2,8 @@
     <s-modal id="instagram-modal" heading="Import from Instagram">
         <s-text-field
             label="Pleas put reel url here"
-            value="Jaded Pixel"
             placeholder="Copy And Past Instagram Reel Url here"
+            v-model="reelUrl"
         />
 
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">
@@ -14,6 +14,7 @@
             variant="primary"
             commandFor="video-uploader-modal"
             command="--hide"
+            @click="importVideo"
         >
             Save
         </s-button>
@@ -22,15 +23,25 @@
 
 <script setup>
 import axios from "axios";
+import {ref} from "vue";
+import {initShopifyAppBridge} from "../shopify";
+import {getSessionToken} from '@shopify/app-bridge-utils';
 
-async function uploadFile(e) {
-    const video = e.target.files[0]
+let reelUrl =ref('')
+
+async function importVideo(e) {
     const form = new FormData();
-    console.log("sending from instagram")
+    let app = initShopifyAppBridge();
+    let token = await getSessionToken(app);
+    form.append('url', reelUrl)
 
-    const response = await axios.post("/api/video/upload", form, {
+    console.log("sending from instagram")
+    console.log(import.meta.env.VITE_APP_URL)
+
+    const response = await axios.post("https://videocrat.com/api/video/import-from-instagram", form, {
         headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
         },
         onUploadProgress: (progressEvent) => {
         },

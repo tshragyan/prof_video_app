@@ -45,6 +45,7 @@ async function uploadFile(e) {
     const video = e.target.files[0]
     const form = new FormData();
     form.append("video", video);
+
     videos.value.push(
         {
             id: videos.value.length + 1,
@@ -52,13 +53,10 @@ async function uploadFile(e) {
             src: URL.createObjectURL(video)
         }
     )
-    console.log(videos)
 }
 
 
 async function saveVideos() {
-    console.log(import.meta.env.VITE_APP_URL)
-
     const form = new FormData();
     const data = []
 
@@ -69,7 +67,6 @@ async function saveVideos() {
     let app = initShopifyAppBridge();
     let token = await getSessionToken(app);
 
-    console.log('sending from video uploader')
     const response = await axios.post("https://videocrat.com/api/video/upload", form, {
         headers: {
             "Content-Type": "multipart/form-data",

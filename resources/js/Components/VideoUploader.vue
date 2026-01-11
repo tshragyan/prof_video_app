@@ -61,14 +61,16 @@ async function saveVideos() {
 
     const form = new FormData();
     const data = []
+
     videos.value.forEach((video, i) => {
         form.append('videos[]', video.file)
     });
+
     let app = initShopifyAppBridge();
     let token = getSessionToken(app);
 
     console.log(form)
-    const response = await axios.post("api/video/upload", form, {
+    const response = await axios.post("https://videocrat.com/api/video/upload", form, {
         headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
@@ -76,7 +78,6 @@ async function saveVideos() {
         onUploadProgress: (progressEvent) => {
         },
     });
-    console.log('uploaded', response)
 }
 
 </script>

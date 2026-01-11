@@ -16,7 +16,6 @@
                 </s-button>
             </s-grid-item>
 
-
             <s-grid-item gridColumn="span 1" border="none" borderStyle="dashed">
                 <s-button commandFor="instagram-modal" command="--show">
                     <div class="padding-container">
@@ -29,6 +28,7 @@
                     </div>
                 </s-button>
             </s-grid-item>
+
             <s-grid-item gridColumn="span 1" border="none" borderStyle="dashed">
                 <s-button commandFor="tik-tok-modal" command="--show">
                     <div class="padding-container">
@@ -43,6 +43,8 @@
             </s-grid-item>
         </s-grid>
         <VideoUploader/>
+        <InstagramUploader/>
+        <InstagramUploader/>
     </s-page>
 </template>
 
@@ -50,8 +52,7 @@
 import {defineProps} from 'vue'
 import VideoUploader from '../Components/VideoUploader.vue'
 import InstagramUploader from '../Components/InstagramUploader.vue'
-import axios from 'axios'
-
+import TiktokUploader from '../Components/TiktokUploadre.vue'
 const props = defineProps({
     message: String,
     videos: Array,

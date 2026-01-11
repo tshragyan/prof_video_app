@@ -31,7 +31,7 @@ class ShopifyTokenMiddleware
 
         JWT::$leeway = 10;
         $payload = JWT::decode($matches[1], new Key(config('services.shopify.client_secret'), 'HS256'));
-        $shopName = explode('tps"//', $payload->dest)[1];
+        $shopName = explode('tps://', $payload->dest)[1];
         /** @var User $user */
         $user = User::query()->where('shopify_username', '=', $shopName)->first();
 

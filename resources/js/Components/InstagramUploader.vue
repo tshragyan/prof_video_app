@@ -3,7 +3,8 @@
         <s-text-field
             label="Pleas put reel url here"
             placeholder="Copy And Past Instagram Reel Url here"
-            v-model="reelUrl"
+            :value="reelUrl.value"
+            @input="changeInput"
         />
 
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">
@@ -28,6 +29,10 @@ import {initShopifyAppBridge} from "../shopify";
 import {getSessionToken} from '@shopify/app-bridge-utils';
 
 let reelUrl =ref('')
+
+function changeInput(e) {
+    reelUrl.value = e.target.value
+}
 
 async function importVideo(e) {
     let app = initShopifyAppBridge();

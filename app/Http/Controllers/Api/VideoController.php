@@ -49,7 +49,7 @@ class VideoController extends Controller
     {
         $url = $request->validated()['url'];
 
-        if (!str_starts_with(Video::INSTAGRAM_VIDEOS_PREFIX, $url)) {
+        if (!str_starts_with($url, Video::INSTAGRAM_VIDEOS_PREFIX)) {
             return response(['error' => 'Invalid video url'], 400);
         }
 

@@ -68,7 +68,7 @@ async function saveVideos() {
     let token = getSessionToken(app);
 
     console.log(form)
-    const response = await axios.post(import.meta.env.VITE_APP_URL + "/api/video/upload", form, {
+    const response = await axios.post("/api/video/upload", form, {
         headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,

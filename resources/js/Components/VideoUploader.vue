@@ -8,7 +8,7 @@
             @input="uploadFile"
             border="none"
         />
-        <s-divider />
+        <s-divider/>
 
         <video src=""></video>
 
@@ -35,9 +35,9 @@
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import {ref} from "vue";
 import {initShopifyAppBridge} from "../shopify";
-import { getSessionToken } from '@shopify/app-bridge-utils';
+import {getSessionToken} from '@shopify/app-bridge-utils';
 
 let videos = ref([])
 
@@ -69,7 +69,7 @@ async function saveVideos() {
     let app = initShopifyAppBridge();
     let token = getSessionToken(app);
 
-    console.log(form)
+    console.log('sending from video uploader')
     const response = await axios.post("https://videocrat.com/api/video/upload", form, {
         headers: {
             "Content-Type": "multipart/form-data",

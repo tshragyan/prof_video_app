@@ -27,25 +27,19 @@
 <script setup>
 import axios from "axios";
 
-async function uploadFile(e)
-{
+async function uploadFile(e) {
     const video = e.target.files[0]
     const form = new FormData();
     form.append("video", video);
-
-    console.log(import.meta.env.VITE_APP_URL)
-    try {
-        const response = await axios.post(import.meta.env.VITE_APP_URL +  "/api/video/upload", form, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: (progressEvent) => {
-            },
-        });
-        console.log('uploaded', response)
-    } catch (error) {
-        console.log('upload error', error)
-    }
+    console.log("sending from tiktok")
+    const response = await axios.post("https://videocrat.com/api/video/upload", form, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+        },
+    });
+    console.log('uploaded', response)
 
 }
 </script>

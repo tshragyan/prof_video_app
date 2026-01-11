@@ -1,9 +1,9 @@
 <template>
-    <s-modal id="instagram-modal" heading="Details">
+    <s-modal id="instagram-modal" heading="Import from Instagram">
         <s-text-field
-            label="Reel's Url"
+            label="Pleas put reel url here"
             value="Jaded Pixel"
-            placeholder="Copy And Past Instagram Reel's Url here"
+            placeholder="Copy And Past Instagram Reel Url here"
         />
 
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">

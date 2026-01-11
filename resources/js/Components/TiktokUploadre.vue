@@ -32,7 +32,7 @@ async function uploadFile(e) {
     const form = new FormData();
     form.append("video", video);
     console.log("sending from tiktok")
-    const response = await axios.post("https://videocrat.com/api/video/upload", form, {
+    const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/upload`, form, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

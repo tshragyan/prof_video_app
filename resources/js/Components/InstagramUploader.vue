@@ -30,16 +30,17 @@ import {getSessionToken} from '@shopify/app-bridge-utils';
 let reelUrl =ref('')
 
 async function importVideo(e) {
-    const form = new FormData();
     let app = initShopifyAppBridge();
     let token = await getSessionToken(app);
-    form.append('url', reelUrl.value)
 
     console.log("sending from instagram")
     console.log(import.meta.env.VITE_APP_URL)
 
-    const response = await axios.post("https://videocrat.com/api/video/import-from-instagram", form, {
+    const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/import-from-instagram`, {
+        "url" : reelUrl.value
+    }, {
         headers: {
+            "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
         },
         onUploadProgress: (progressEvent) => {

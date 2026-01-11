@@ -3,7 +3,7 @@
         <s-text-field
             label="Pleas put reel url here"
             placeholder="Copy And Past Instagram Reel Url here"
-            v-model="reelUrl"
+            v-model="reelUrl.value"
         />
 
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">

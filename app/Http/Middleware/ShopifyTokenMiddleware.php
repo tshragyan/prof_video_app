@@ -33,7 +33,7 @@ class ShopifyTokenMiddleware
         $payload = JWT::decode($matches[1], new Key(config('services.shopify.client_secret'), 'HS256'));
         /** @var User $user */
         $user = User::query()->where('shopify_username', '=', $payload->dest)->first();
-        dd($user->id);
+        dd($payload->dest);
         if ($user) {
             auth()->login($user);
         }

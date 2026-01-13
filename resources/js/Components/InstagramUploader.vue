@@ -6,7 +6,10 @@
             :value="reelUrl.value"
             @input="changeInput"
         />
-
+        <s-spinner
+            accessibilityLabel="Loading" size="large-100"
+            v-show="loading"
+        />
         <s-button slot="secondary-actions" commandFor="video-uploader-modal" command="--hide">
             Close
         </s-button>
@@ -17,7 +20,7 @@
             command="--hide"
             @click="importVideo"
         >
-            Save
+            Import
         </s-button>
     </s-modal>
 </template>
@@ -28,8 +31,8 @@ import {ref} from "vue";
 import {initShopifyAppBridge} from "../shopify";
 import {getSessionToken} from '@shopify/app-bridge-utils';
 
-let reelUrl =ref('')
-
+let reelUrl = ref('')
+let loading = false
 function changeInput(e) {
     reelUrl.value = e.target.value
 }
@@ -40,7 +43,7 @@ async function importVideo(e) {
 
     console.log("sending from instagram")
     console.log(import.meta.env.VITE_APP_URL)
-
+    loading = true
     const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/import-from-instagram`, {
         "url" : reelUrl.value
     }, {
@@ -51,6 +54,7 @@ async function importVideo(e) {
         onUploadProgress: (progressEvent) => {
         },
     });
+    loading = false
     console.log('uploaded', response)
 
 }

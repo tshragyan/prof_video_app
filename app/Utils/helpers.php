@@ -7,7 +7,7 @@ if (!function_exists('igShortcodeToId')) {
         foreach (str_split($shortcode) as $c) {
             $id = $id * 64 + strpos($alphabet, $c);
         }
-        echo ' video id' . $id;
+
         return $id;
     }
 }

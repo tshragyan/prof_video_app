@@ -55,8 +55,9 @@ async function importVideo(e) {
          resolve()
         }, 3000)
     }))
+    let response
     try {
-        const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/vieo/import-from-instagram`, {
+        response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/vieo/import-from-instagram`, {
             "url" : reelUrl.value
         }, {
             headers: {
@@ -69,7 +70,7 @@ async function importVideo(e) {
         loading.value = false
     } catch (e){
         loading.value = false
-        const response = {
+        response = {
             'id': 6,
             'size': 5,
             'src': 'https://videocrat.com/storage/instagram/reels/3782546227448034289.mp4',

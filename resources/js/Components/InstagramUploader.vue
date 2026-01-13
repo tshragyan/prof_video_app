@@ -44,7 +44,7 @@ async function importVideo(e) {
     console.log("sending from instagram")
     console.log(import.meta.env.VITE_APP_URL)
     loading.value = true
-    const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/import-from-instagram`, {
+    const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/vieo/import-from-instagram`, {
         "url" : reelUrl.value
     }, {
         headers: {

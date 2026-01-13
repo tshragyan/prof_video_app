@@ -46,15 +46,15 @@ class VideoController extends Controller
         return response()->json(['data' => $responseData]);
     }
 
-    public function importFromInstagram(UploadFromInstagram $request, InstagramService $instagramService)
+    public function importFromInstagram(Request $request, InstagramService $instagramService)
     {
-        $url = $request->validated()['url'];
+        $url = $request->get('url');
 
         if (!str_starts_with($url, Video::INSTAGRAM_VIDEOS_PREFIX)) {
             return response(['error' => 'Invalid video url'], 400);
         }
 
-        $shortCode = igShortcodeToId($url);
+        $shortCode = getIgShortCodeFromUrl($url);
         $videoId = igShortcodeToId($shortCode);
         $video = $instagramService->importReels($videoId);
 

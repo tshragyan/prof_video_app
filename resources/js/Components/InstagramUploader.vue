@@ -5,6 +5,7 @@
             placeholder="Copy And Past Instagram Reel Url here"
             :value="reelUrl.value"
             @input="changeInput"
+            v-show="!loading"
         />
         <s-spinner
             accessibilityLabel="Loading" size="large-100"

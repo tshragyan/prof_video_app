@@ -40,6 +40,6 @@ class InstagramService
             file_get_contents($videoUrl)
         );
 
-        return ['path' => $path, 'size' => $mb];
+        return ['path' => "$path/{$videoId}.mp4", 'size' => $mb];
     }
 }

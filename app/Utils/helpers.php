@@ -13,7 +13,7 @@ if (!function_exists('igShortcodeToId')) {
 if (!function_exists('getIgShortCodeFromUrl')) {
     function getIgShortCodeFromUrl(string $url): string
     {
-        return explode('/', $url)[2];
+        return explode('/', $url)[4];
     }
 }
 ?>

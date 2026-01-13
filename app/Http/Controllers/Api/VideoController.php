@@ -76,7 +76,7 @@ class VideoController extends Controller
 
         return response([
             'id' => $video->id,
-            'title' => $video->title,
+            'size' => 5,
             'src' => $video->src,
             'title' => $video->title
         ], 200);

@@ -33,13 +33,11 @@ class InstagramService
         }
 
         $bytes = filesize($path);
-        $mb = round($bytes / 1024 / 1024, 2);
-
         file_put_contents(
             "$path/{$videoId}.mp4",
             file_get_contents($videoUrl)
         );
 
-        return ['path' => "$path/{$videoId}.mp4", 'size' => $mb];
+        return ['path' => "$path/{$videoId}.mp4", 'size' => $bytes];
     }
 }

@@ -61,19 +61,25 @@ class VideoController extends Controller
         if (isset($video['path'])) {
             /** @var User $user */
             $user = auth()->user();
+            /** @var Video $video */
             $video = Video::query()
                 ->create([
                     'title' => 'video_' . ($user->videos()->count() + 1),
                     'user_id' => $user->id,
                     'size' => $video['size'],
-                    'src' => env('APP_URL') . '/storage' . explode('app', $video['path'])[1],
+                    'src' => env('APP_URL') . '/storage' . explode('app', $video['public'])[1],
                     'from' => Video::PC_KEYWORD,
                     'stored' => Video::STORED_LOCAL,
                     'path' => $video['path']
                 ]);
         }
 
-        return response(['url' => $video->src, 'id' => $video], 200);
+        return response([
+            'id' => $video->id,
+            'title' => $video->title,
+            'src' => $video->src,
+            'title' => $video->title
+        ], 200);
     }
 
 //    public function importFromTelegram(UploadFromInstagram $request, TelegramService $telegramService)

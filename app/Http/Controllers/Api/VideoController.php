@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadFromInstagram;
 use App\Http\Requests\VideoUpladRequest;
+use App\Http\Services\InstagramService;
 use App\Http\Services\TelegramService;
 use App\Models\User;
 use App\Models\Video;
@@ -45,7 +46,7 @@ class VideoController extends Controller
         return response()->json(['data' => $responseData]);
     }
 
-    public function importFromInstagram(UploadFromInstagram $request, TelegramService $telegramService)
+    public function importFromInstagram(UploadFromInstagram $request, InstagramService $instagramService)
     {
         $url = $request->validated()['url'];
 
@@ -53,25 +54,55 @@ class VideoController extends Controller
             return response(['error' => 'Invalid video url'], 400);
         }
 
-        $message = $telegramService->sendMessage($url);
-        $uploadedVideo = $telegramService->getBotMessageVideoById($message['bot'], $message['id']);
+        $shortCode = igShortcodeToId($url);
+        $videoId = igShortcodeToId($shortCode);
+        $video = $instagramService->importReels($videoId);
 
-        /** @var User $user */
-        $user = auth()->user();
-
-        $video = Video::query()
-            ->create([
-                'title' => $title ?? 'video_1' . ($user->videos()->count() + 1),
-                'user_id' => $user->id,
-                'size' => $uploadedVideo['size'],
-                'src' => env('APP_URL') . '/storage' .explode('app', $uploadedVideo['path'])[1],
-                'from' => Video::PC_KEYWORD,
-                'stored' => Video::STORED_LOCAL,
-                'path' => $uploadedVideo['path']
-            ]);
+        if (isset($video['path'])) {
+            /** @var User $user */
+            $user = auth()->user();
+            $video = Video::query()
+                ->create([
+                    'title' => 'video_' . ($user->videos()->count() + 1),
+                    'user_id' => $user->id,
+                    'size' => $video['size'],
+                    'src' => env('APP_URL') . '/storage' . explode('app', $video['path'])[1],
+                    'from' => Video::PC_KEYWORD,
+                    'stored' => Video::STORED_LOCAL,
+                    'path' => $video['path']
+                ]);
+        }
 
         return response(['url' => $video->src, 'id' => $video], 200);
     }
+
+//    public function importFromTelegram(UploadFromInstagram $request, TelegramService $telegramService)
+//    {
+//        $url = $request->validated()['url'];
+//
+//        if (!str_starts_with($url, Video::INSTAGRAM_VIDEOS_PREFIX)) {
+//            return response(['error' => 'Invalid video url'], 400);
+//        }
+//
+//        $message = $telegramService->sendMessage($url);
+//        $uploadedVideo = $telegramService->getBotMessageVideoById($message['bot'], $message['id']);
+//
+//        /** @var User $user */
+//        $user = auth()->user();
+//
+//        $video = Video::query()
+//            ->create([
+//                'title' => $title ?? 'video_1' . ($user->videos()->count() + 1),
+//                'user_id' => $user->id,
+//                'size' => $uploadedVideo['size'],
+//                'src' => env('APP_URL') . '/storage' .explode('app', $uploadedVideo['path'])[1],
+//                'from' => Video::PC_KEYWORD,
+//                'stored' => Video::STORED_LOCAL,
+//                'path' => $uploadedVideo['path']
+//            ]);
+//
+//        return response(['url' => $video->src, 'id' => $video], 200);
+//    }
 
     public function saveVideo()
     {

@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\VideoController as ApiVideoController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Video;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,7 +33,48 @@ use Illuminate\Support\Facades\Storage;
 
 //Route::get('im-hrashq', [DashboardController::class, 'downloader']);
 //Route::post('download', [DashboardController::class, 'download'])->name('download.insta');
-
+//function igShortcodeToId($shortcode) {
+//    $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+//    $id = 0;
+//    foreach (str_split($shortcode) as $c) {
+//        $id = $id * 64 + strpos($alphabet, $c);
+//    }
+//    return $id;
+//}
+//
+$mediaId = igShortcodeToId('DSxbaKDiePK');
+dd($mediaId);
+//$response = Http::withHeaders([
+//    'User-Agent' => 'Instagram 302.1.0.34.111 Android',
+//    'X-IG-App-ID' => '936619743392459',
+//    'X-Requested-With' => 'XMLHttpRequest',
+//    'Referer' => 'https://www.instagram.com/',
+//    'Accept' => '*/*'
+//])->withCookies([
+//    'sessionid' => '78018370422%3AdqW7IuumjKIMh2%3A7%3AAYgHao3UtSslU0-XvmzXGvXefhCtM1WR-lRVw2YNpw',
+//    'csrftoken' => 'mxhkkD0Qk0ERRa5Dg2h4WxFaPBgsQ3D9',
+//    'ds_user_id' => 78018370422
+//], '.instagram.com')
+//    ->get("https://www.instagram.com/api/v1/media/{$mediaId}/info/");
+//
+//$data = $response->json();
+//$videoUrl = $data['items'][0]['video_versions'][0]['url'];
+//
+//$path = storage_path("app/public/instagram/reels");
+//if (!File::exists($path)) {
+//    File::makeDirectory($path, 0755, true);
+//}
+//file_put_contents(
+//    "$path/{$mediaId}.mp4",
+//    file_get_contents($videoUrl)
+//);
+//dd($data);
+//$videoUrl = $data['graphql']['shortcode_media']['video_url'];
+//
+//file_put_contents(
+//    storage_path('reel.mp4'),
+//    file_get_contents($videoUrl)
+//);
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');

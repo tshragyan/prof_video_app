@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use danog\MadelineProto\API;
+use danog\MadelineProto\Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -66,7 +67,11 @@ class TelegramService
             File::makeDirectory($path, 0755, true);
         }
 
-        $path = $this->client->downloadToDir($response['messages'][0]['media'], $path);
+        if (isset($response['messages'][0])) {
+            $path = $this->client->downloadToDir($response['messages'][0]['media'], $path);
+        } else {
+            throw new Exception('Empty telegram response message body ' . json_encode($response['messages'][0]));
+        }
 
 
         return ['path' => $path, 'size' => $response['messages'][0]['media']['document']['size']];

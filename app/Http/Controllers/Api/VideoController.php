@@ -67,7 +67,7 @@ class VideoController extends Controller
                     'title' => 'video_' . ($user->videos()->count() + 1),
                     'user_id' => $user->id,
                     'size' => $video['size'],
-                    'src' => env('APP_URL') . '/storage' . explode('app', $video['public'])[1],
+                    'src' => env('APP_URL') . '/storage' . explode('public', $video['path'])[1],
                     'from' => Video::PC_KEYWORD,
                     'stored' => Video::STORED_LOCAL,
                     'path' => $video['path']

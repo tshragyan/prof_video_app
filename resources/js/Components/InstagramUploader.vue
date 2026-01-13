@@ -32,7 +32,7 @@ import {initShopifyAppBridge} from "../shopify";
 import {getSessionToken} from '@shopify/app-bridge-utils';
 
 let reelUrl = ref('')
-let loading = false
+let loading = ref(false)
 function changeInput(e) {
     reelUrl.value = e.target.value
 }
@@ -43,7 +43,7 @@ async function importVideo(e) {
 
     console.log("sending from instagram")
     console.log(import.meta.env.VITE_APP_URL)
-    loading = true
+    loading.value = true
     const response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/import-from-instagram`, {
         "url" : reelUrl.value
     }, {
@@ -54,7 +54,7 @@ async function importVideo(e) {
         onUploadProgress: (progressEvent) => {
         },
     });
-    loading = false
+    loading.value = false
     console.log('uploaded', response)
 
 }

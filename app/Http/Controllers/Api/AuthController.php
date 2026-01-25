@@ -26,6 +26,7 @@ class AuthController extends Controller
 
     public function callback(Request $request)
     {
+        dd($request);
         ShopifyErrorLog::query()->create(
             [
                 'user_id' => 6,

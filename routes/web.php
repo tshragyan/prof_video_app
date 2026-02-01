@@ -28,7 +28,12 @@ use Illuminate\Support\Facades\Storage;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//$instagramService = new \App\Http\Services\InstagramService();
+//$nickname = getIgUserNickNameByUrl('https://www.instagram.com/zarina_fashion/reels/');
+//$userId = $instagramService->findUserIdByUsername($nickname);
+//$videos = $instagramService->getVideosFromUserPageById($userId);
+//dd(json_encode($videos));
+//dd($mediaId);
 Route::middleware('shopify.host')->group(function() {
     Route::get('/', [DashboardController::class, 'home'])->name('dashboard.home');
     Route::get('/videos', [ApiVideoController::class, 'list'])->name('videos.list');

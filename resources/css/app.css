@@ -4,3 +4,6 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+.modal:not(.shopify-mobile) {
+    overflow: unset;
+}

@@ -17,4 +17,15 @@ if (!function_exists('getIgShortCodeFromUrl')) {
         return explode('/', $url)[4];
     }
 }
+
+if (!function_exists('getIgUserNickNameByUrl')) {
+    function getIgUserNickNameByUrl(string $url): string
+    {
+        if (str_contains($url, '/')) {
+            return explode('/', $url)[3];
+        }
+
+        return $url;
+    }
+}
 ?>

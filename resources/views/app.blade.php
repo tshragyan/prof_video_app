@@ -2,7 +2,9 @@
 <html>
 <head>
     <meta name="shopify-api-key" content="{{config('services.shopify.api_key')}}" />
-    <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
+    @if (!str_contains(env('app_url'), 'videocrat.loc'))
+        <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
+    @endif
     <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
     <script>
         window.LARAVEL = {

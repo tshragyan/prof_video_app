@@ -1,5 +1,9 @@
 <template>
-    <s-modal id="tik-tok-modal" heading="Details">
+    <s-modal
+        id="tik-tok-modal"
+        heading="Import From Tiktok"
+        accessibilityLabel="Import From Tiktok"
+    >
         <s-drop-zone
             label="Upload"
             accessibilityLabel="Upload Video"

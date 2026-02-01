@@ -1,22 +1,24 @@
-import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
-import { initShopifyAppBridge } from './shopify'
+import {createApp, h} from 'vue'
+import {createInertiaApp} from '@inertiajs/vue3'
+// import { initShopifyAppBridge } from './shopify'
 
 createInertiaApp({
     resolve: name => import(`./Pages/${name}.vue`),
-    setup({ el, App, props }) {
-
-        const appBridge = initShopifyAppBridge(props.initialPage.props);
-
+    setup({el, App, props}) {
         const vueApp = createApp({
             render: () => h(App, props),
         });
 
-        vueApp.config.globalProperties.$appBridge = appBridge;
-        vueApp.provide('appBridge', appBridge);
+        if (!window.location.href.includes('videocrat.loc')) {
 
-        vueApp.config.compilerOptions.isCustomElement = tag =>
-            tag.startsWith('polaris-');
+            const appBridge = initShopifyAppBridge(props.initialPage.props);
+
+            vueApp.config.globalProperties.$appBridge = appBridge;
+            vueApp.provide('appBridge', appBridge);
+
+            vueApp.config.compilerOptions.isCustomElement = tag =>
+                tag.startsWith('polaris-');
+        }
 
         vueApp.mount(el);
     },

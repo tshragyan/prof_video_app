@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "danog/madelineproto": "^8.6",
         "firebase/php-jwt": "^6.11",
         "gnikyt/basic-shopify-api": "^11.0",
         "guzzlehttp/guzzle": "^7.2",

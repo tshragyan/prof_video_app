@@ -3,18 +3,20 @@ import { getSessionToken } from '@shopify/app-bridge-utils';
 
 export function initShopifyAppBridge(props) {
     const url = new URL(window.location.href);
+    if (!window.location.href.includes('videocrat.loc')) {
+        const app = createApp({
+            apiKey: import.meta.env.VITE_SHOPIFY_API_KEY,
+            host: url.searchParams.get('host'),
+            forceRedirect: true,
+        });
 
-    const app = createApp({
-        apiKey: import.meta.env.VITE_SHOPIFY_API_KEY,
-        host: url.searchParams.get('host'),
-        forceRedirect: true,
-    });
+        getSessionToken(app).then(token => {
+            if (window.axios) {
+                window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            }
+        });
 
-    getSessionToken(app).then(token => {
-        if (window.axios) {
-            window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        }
-    });
+        return app;
+    }
 
-    return app;
 }

@@ -33,6 +33,12 @@ return [
         'host' => env('APP_URL'),
     ],
 
+    'instagram' => [
+        'sessionid' => env('IG_SESSION_ID'),
+        'csrftoken' => env('IG_CSRF_TOKEN'),
+        'ds_user_id' => env('IG_USER_ID'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('src');
+            $table->longText('title')->nullable();
+            $table->longText('src');
             $table->string('size');
             $table->unsignedBigInteger('user_id');
             $table->string('from');
             $table->string('external_url')->nullable();
             $table->string('stored');
             $table->boolean('saved')->default(false);
-            $table->string('path');
+            $table->longText('path');
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')

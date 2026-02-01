@@ -40,7 +40,6 @@ class CheckShopifyHost
                 auth()->login($user);
             }
         } else {
-
             /** @var User $user */
             $user = User::query()->first();
             if ($user) {

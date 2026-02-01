@@ -32,9 +32,9 @@ class Video extends Model
     const INSTAGRAM_KEYWORD = 'Instagram';
     const TIK_TOK_KEYWORD = 'Tiktok';
     const PC_KEYWORD = 'PC';
-
     const STORED_LOCAL = 'Server';
 
+    const INSTAGRAM_VIDEO_SAVING_PATH = 'app/public/instagram/reels';
     protected $fillable = [
         'title',
         'src',

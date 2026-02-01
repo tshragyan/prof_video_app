@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveImportedVideosRequest;
 use App\Http\Requests\UploadFromInstagram;
 use App\Http\Requests\VideoUpladRequest;
 use App\Http\Services\InstagramService;
 use App\Http\Services\TelegramService;
+use App\Http\Services\VideoService;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -46,6 +49,63 @@ class VideoController extends Controller
         return response()->json(['data' => $responseData]);
     }
 
+    public function saveImportedVideos(SaveImportedVideosRequest $request)
+    {
+        $videos = $request->validated()['videos'];
+        $response = [];
+        /** @var User $user */
+        $user = auth()->user();
+
+        foreach ($videos as $videoItem) {
+            /** @var Video $video */
+            $video = Video::query()
+                ->create([
+                    'title' => $videoItem['title'] ?? 'video_' . ($user->videos()->count() + 1),
+                    'user_id' => $user->id,
+                    'size' => '1',
+//                    'src' => env('APP_URL') . '/storage' . explode('public', $video['url'])[1],
+                    'src' => $videoItem['url'],
+                    'from' => Video::INSTAGRAM_KEYWORD,
+                    'stored' => Video::STORED_LOCAL,
+                    'path' => $videoItem['url']
+                ]);
+
+            $response[] = [
+              'id' => $video->id,
+              'title' => $video->title,
+              'src' => $video->src
+            ];
+        }
+
+        return response()->json($response);
+    }
+
+    public function saveVideos(Request $request, VideoService $videoService)
+    {
+        $videos = $request->input('videos');
+
+        foreach ($videos as $video) {
+            $videoData = $videoService->downloadVideosToFiles($video['id'], $video['url']);
+            if (isset($videoData['path'])) {
+                /** @var User $user */
+                $user = auth()->user();
+                /** @var Video $video */
+                $video = Video::query()
+                    ->create([
+                        'title' => 'video_' . ($user->videos()->count() + 1),
+                        'user_id' => $user->id,
+                        'size' => $videoData['size'],
+                        'src' => env('APP_URL') . '/storage' . explode('public', $videoData['path'])[1],
+                        'from' => Video::INSTAGRAM_KEYWORD,
+                        'stored' => Video::STORED_LOCAL,
+                        'path' => $videoData['path']
+                    ]);
+            }
+
+            return response()->json(['status' => 'success'], 200);
+        }
+    }
+
     public function importFromInstagram(Request $request, InstagramService $instagramService)
     {
         $url = $request->get('url');
@@ -58,29 +118,25 @@ class VideoController extends Controller
         $videoId = igShortcodeToId($shortCode);
         $video = $instagramService->importReels($videoId);
 
-        if (isset($video['path'])) {
-            /** @var User $user */
-            $user = auth()->user();
-            /** @var Video $video */
-            $video = Video::query()
-                ->create([
-                    'title' => 'video_' . ($user->videos()->count() + 1),
-                    'user_id' => $user->id,
-                    'size' => $video['size'],
-                    'src' => env('APP_URL') . '/storage' . explode('public', $video['path'])[1],
-                    'from' => Video::PC_KEYWORD,
-                    'stored' => Video::STORED_LOCAL,
-                    'path' => $video['path']
-                ]);
-        }
-
         return response([
-            'id' => $video->id,
-            'size' => 5,
-            'src' => $video->src,
-            'title' => $video->title
+            'video' => $video
         ], 200);
     }
+
+    public function importIgVideoFromUserPage(Request $request, InstagramService $instagramService)
+    {
+//        $videos = Cache::get('videos', null);
+        if (!isset($videos) || is_null($videos)) {
+            $nickname = getIgUserNickNameByUrl($request->input('url'));
+            $userId = $instagramService->findUserIdByUsername($nickname);
+            $videos = $instagramService->getVideosFromUserPageById($userId, $request->get('maxId', null));
+        } else {
+            $videos = json_decode($videos, true);
+        }
+
+        return response()->json($videos, 200);
+    }
+
 
 //    public function importFromTelegram(UploadFromInstagram $request, TelegramService $telegramService)
 //    {

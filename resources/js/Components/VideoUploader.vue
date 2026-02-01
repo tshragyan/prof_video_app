@@ -1,5 +1,9 @@
 <template>
-    <s-modal id="video-uploader-modal" heading="Upload Video">
+    <s-modal
+        id="video-uploader-modal"
+        heading="Upload From Your PC"
+        accessibilityLabel="Upload From Your PC"
+    >
         <s-drop-zone
             label="Upload"
             accessibilityLabel="Upload Video"
@@ -10,11 +14,6 @@
             v-show="!loading"
         />
         <s-divider/>
-
-        <video
-            src=""
-            v-show="!loading"
-        ></video>
 
         <s-stack
             direction="inline"
@@ -84,14 +83,17 @@ async function saveVideos() {
 
     videos.value.forEach((video, i) => {
         form.append('videos[]', video.file)
+        form.append('type', 'upload')
     });
 
-    let app = initShopifyAppBridge();
-    let token = await getSessionToken(app);
+    // let app = initShopifyAppBridge();
+    // let token = await getSessionToken(app);
+    let token = 'aaaass';
+
     let response
 
     try {
-        response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/vid4eo/upload`, form, {
+        response = await axios.post(`${import.meta.env.VITE_APP_URL}/api/video/upload`, form, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`,

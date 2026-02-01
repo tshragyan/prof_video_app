@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('video')->name('video.')->middleware([
     'shopify.auth',
-    'shopify.host'
 ])->group(function () {
     Route::post('upload', [VideoController::class, 'upload'])->name('upload');
     Route::post('import-from-instagram', [VideoController::class, 'importFromInstagram'])->name('import-from-instagram');

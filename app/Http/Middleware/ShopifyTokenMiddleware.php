@@ -19,24 +19,25 @@ class ShopifyTokenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->headers->has('authorization')) {
-            throw new MissingArgumentException('Missing Authorization key in headers array');
-        }
+        if (env('APP_ENV') !== 'local') {
+            if (!$request->headers->has('authorization')) {
+                throw new MissingArgumentException('Missing Authorization key in headers array');
+            }
 
-        $auth = $request->headers->get('authorization');
-        preg_match('/^Bearer (.+)$/', (string) $auth, $matches);
-        if (!$matches) {
-            throw new MissingArgumentException('Missing Bearer token in authorization header');
-        }
+            $auth = $request->headers->get('authorization');
+            preg_match('/^Bearer (.+)$/', (string) $auth, $matches);
+            if (!$matches) {
+                throw new MissingArgumentException('Missing Bearer token in authorization header');
+            }
 
-        JWT::$leeway = 10;
-        $payload = JWT::decode($matches[1], new Key(config('services.shopify.client_secret'), 'HS256'));
-        $shopName = explode('tps://', $payload->dest)[1];
-        /** @var User $user */
-        $user = User::query()->where('shopify_username', '=', $shopName)->first();
+            JWT::$leeway = 10;
+            $payload = JWT::decode($matches[1], new Key(config('services.shopify.client_secret'), 'HS256'));
+            $shopName = explode('tps://', $payload->dest)[1];
+            $user = User::query()->where('shopify_username', '=', $shopName)->first();
 
-        if ($user) {
-            auth()->login($user);
+            if (!$user) {
+                throw new MissingArgumentException('Missing Bearer token in authorization header');
+            }
         }
 
         return $next($request);

@@ -3,7 +3,7 @@ import { getSessionToken as getSessionTokenBase } from '@shopify/app-bridge-util
 
 export function initShopifyAppBridge(props) {
     const url = new URL(window.location.href);
-    if (!url.includes('videocrat.loc')) {
+    if (!window.location.href.includes('videocrat.loc')) {
         const app = createApp({
             apiKey: import.meta.env.VITE_SHOPIFY_API_KEY,
             host: url.searchParams.get('host'),

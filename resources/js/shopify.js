@@ -1,5 +1,5 @@
 import createApp from '@shopify/app-bridge';
-import { getSessionToken } from '@shopify/app-bridge-utils';
+import { getSessionToken as getSessionTokenBase } from '@shopify/app-bridge-utils';
 
 export function initShopifyAppBridge(props) {
     const url = new URL(window.location.href);
@@ -26,7 +26,7 @@ export async function getSessionToken(app = null) {
     let token = 'token';
 
     if (!window.location.href.includes('videocrat.loc')) {
-        token = await getSessionToken(app);
+        token = await getSessionTokenBase(app);
     }
 
     return token;

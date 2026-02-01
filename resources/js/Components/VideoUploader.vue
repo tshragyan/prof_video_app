@@ -57,8 +57,7 @@
 <script setup>
 import axios from "axios";
 import {ref} from "vue";
-import {initShopifyAppBridge} from "../shopify";
-import {getSessionToken} from '@shopify/app-bridge-utils';
+import {initShopifyAppBridge, getSessionToken} from "../shopify";
 
 let videos = ref([])
 const loading = ref(false)
@@ -86,9 +85,8 @@ async function saveVideos() {
         form.append('type', 'upload')
     });
 
-    // let app = initShopifyAppBridge();
-    // let token = await getSessionToken(app);
-    let token = 'aaaass';
+    let app = initShopifyAppBridge();
+    let token = await getSessionToken(app);
 
     let response
 

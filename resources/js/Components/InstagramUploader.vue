@@ -152,8 +152,7 @@
 <script setup>
 import axios from "axios";
 import {ref} from "vue";
-import {initShopifyAppBridge} from "../shopify";
-import {getSessionToken} from '@shopify/app-bridge-utils';
+import {initShopifyAppBridge, getSessionToken} from "../shopify";
 
 let reelUrl = ref('https://www.instagram.com/zarina_fashion/reels/')
 let loading = ref(false)
@@ -177,9 +176,8 @@ function changeInput(e) {
 }
 
 async function saveVideos() {
-    // let app = initShopifyAppBridge();
-    // let token = await getSessionToken(app);
-    let token = 'token'
+    let app = initShopifyAppBridge();
+    let token = await getSessionToken(app);
     loading.value = true
     let data = videos.value.filter(i => {
         return i.is_selected
@@ -200,9 +198,8 @@ async function saveVideos() {
 }
 
 async function loadMoreVideos() {
-    // let app = initShopifyAppBridge();
-    // let token = await getSessionToken(app);
-    let token = 'token'
+    let app = initShopifyAppBridge();
+    let token = await getSessionToken(app);
 
     console.log("loading more videos")
     smallLoading.value = true
@@ -238,8 +235,8 @@ async function loadMoreVideos() {
 }
 
 async function importVideo(e) {
-    // let app = initShopifyAppBridge();
-    // let token = await getSessionToken(app);
+    let app = initShopifyAppBridge();
+    let token = await getSessionToken(app);
 
     if (!reelUrl.value.length) {
         errors.value = {
@@ -253,8 +250,6 @@ async function importVideo(e) {
             'input': ''
         }
     }
-
-    let token = 'aaaass';
 
     console.log("sending from instagram")
     loading.value = true

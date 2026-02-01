@@ -19,4 +19,15 @@ export function initShopifyAppBridge(props) {
         return app;
     }
 
+    return null;
+}
+
+export async function getSessionToken(app = null) {
+    let token = 'token';
+
+    if (!window.location.href.includes('videocrat.loc')) {
+        token = await getSessionToken(app);
+    }
+
+    return token;
 }

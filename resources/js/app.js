@@ -1,6 +1,6 @@
 import {createApp, h} from 'vue'
 import {createInertiaApp} from '@inertiajs/vue3'
-// import { initShopifyAppBridge } from './shopify'
+import { initShopifyAppBridge } from './shopify'
 
 createInertiaApp({
     resolve: name => import(`./Pages/${name}.vue`),
